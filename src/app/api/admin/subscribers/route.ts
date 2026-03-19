@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server'
 import { MongoClient, ObjectId } from 'mongodb'
 
+export const dynamic = 'force-dynamic'
+
 const uri = process.env.DATABASE_URL || ""
 const client = new MongoClient(uri)
 
