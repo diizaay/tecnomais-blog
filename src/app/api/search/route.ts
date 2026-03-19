@@ -2,10 +2,17 @@ import { NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
 
 export const dynamic = 'force-dynamic'
+export const revalidate = 0
+export const fetchCache = 'force-no-store'
 
-export async function GET(req: Request) {
-    const { searchParams } = new URL(req.url)
-    const query = searchParams.get('q')
+export async function GET(request: Request) {
+    let query = ''
+    try {
+        const { searchParams } = new URL(request.url)
+        query = searchParams.get('q') || ''
+    } catch (e) {
+        return NextResponse.json({ articles: [] })
+    }
 
     if (!query || query.length < 2) {
         return NextResponse.json({ articles: [] })

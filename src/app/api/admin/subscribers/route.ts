@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { MongoClient, ObjectId } from 'mongodb'
 
 export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 const uri = process.env.DATABASE_URL || ""
 const client = new MongoClient(uri)

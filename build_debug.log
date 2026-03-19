@@ -1,0 +1,65 @@
+  Ôû▓ Next.js 14.2.35
+  - Environments: .env
+
+   Creating an optimized production build ...
+ ÔÜá Found lockfile missing swc dependencies, patching...
+ Ô£ô Compiled successfully
+   Skipping linting
+   Checking validity of types ...
+ Ô¿» Failed to patch lockfile, please try uninstalling and reinstalling next in this workspace
+TypeError: Cannot read properties of undefined (reading 'os')
+    at fetchPkgInfo (C:\Users\dhiva\Documents\Angotech\premium-tech-blog\node_modules\next\dist\lib\patch-incorrect-lockfile.js:73:25)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Promise.all (index 0)
+    at async patchIncorrectLockfile (C:\Users\dhiva\Documents\Angotech\premium-tech-blog\node_modules\next\dist\lib\patch-incorrect-lockfile.js:162:26)
+   Collecting page data ...
+   Generating static pages (0/21) ...
+   Generating static pages (5/21) 
+   Generating static pages (10/21) 
+   Generating static pages (15/21) 
+ Ô£ô Generating static pages (21/21)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                              Size     First Load JS
+Ôöî ãÆ /                                    1.39 kB         150 kB
+Ôö£ Ôùï /_not-found                          873 B          88.3 kB
+Ôö£ Ôùï /about                               197 B           149 kB
+Ôö£ ãÆ /admin                               136 B          87.6 kB
+Ôö£ ãÆ /admin/artigos                       564 B          96.7 kB
+Ôö£ ãÆ /admin/artigos/[id]/editar           145 B           153 kB
+Ôö£ ãÆ /admin/artigos/novo                  146 B           153 kB
+Ôö£ ãÆ /admin/categorias                    591 B          96.8 kB
+Ôö£ ãÆ /admin/categorias/[id]/editar        1.23 kB        97.4 kB
+Ôö£ ãÆ /admin/categorias/novo               1.23 kB        97.4 kB
+Ôö£ ãÆ /admin/subscribers                   2.27 kB         131 kB
+Ôö£ ãÆ /api/admin/artigos                   0 B                0 B
+Ôö£ ãÆ /api/admin/artigos/[id]              0 B                0 B
+Ôö£ ãÆ /api/admin/categorias                0 B                0 B
+Ôö£ ãÆ /api/admin/categorias/[id]           0 B                0 B
+Ôö£ ãÆ /api/admin/subscribers               0 B                0 B
+Ôö£ ãÆ /api/admin/upload                    0 B                0 B
+Ôö£ ãÆ /api/auth/[...nextauth]              0 B                0 B
+Ôö£ ãÆ /api/newsletter/subscribe            0 B                0 B
+Ôö£ ãÆ /api/search                          0 B                0 B
+Ôö£ ãÆ /artigo/[slug]                       3.25 kB         152 kB
+Ôö£ ãÆ /autor/[name]                        2.17 kB         151 kB
+Ôö£ ãÆ /categoria/[slug]                    2.16 kB         151 kB
+Ôö£ Ôùï /contact                             197 B           149 kB
+Ôö£ Ôùï /login                               10.8 kB         107 kB
+Ôö£ Ôùï /newsletter                          1.76 kB         150 kB
+Ôö£ Ôùï /privacy                             197 B           149 kB
+Ôö£ Ôùï /robots.txt                          0 B                0 B
+Ôö£ ãÆ /sitemap.xml                         0 B                0 B
+Ôöö Ôùï /terms                               202 B           149 kB
++ First Load JS shared by all            87.5 kB
+  Ôö£ chunks/117-c86a41b869f6b521.js       31.7 kB
+  Ôö£ chunks/fd9d1056-6922f449a204c2cc.js  53.6 kB
+  Ôöö other shared chunks (total)          2.1 kB
+
+
+ãÆ Middleware                             47.8 kB
+
+Ôùï  (Static)   prerendered as static content
+ãÆ  (Dynamic)  server-rendered on demand
+
