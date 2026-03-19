@@ -18,16 +18,31 @@ export async function generateMetadata({ params }: { params: { slug: string } })
         const article = await prisma.article.findUnique({ where: { slug: params.slug } })
         if (!article) return {}
 
+        const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://tecnomais.online'
+        const articleUrl = `${siteUrl}/artigo/${article.slug}`
+
         return {
-            title: article.seoTitle || `${article.title} | TecnoMais`,
+            title: article.seoTitle || article.title,
             description: article.seoDesc || article.excerpt,
+            alternates: {
+                canonical: articleUrl,
+            },
             openGraph: {
                 title: article.title,
                 description: article.excerpt,
-                images: [article.featuredImage || ''],
+                images: [{ url: article.featuredImage || '', alt: article.title }],
                 type: 'article',
+                url: articleUrl,
                 publishedTime: article.publishedDate.toISOString(),
-            }
+                authors: [article.author],
+                siteName: 'TecnoMais',
+            },
+            twitter: {
+                card: 'summary_large_image',
+                title: article.title,
+                description: article.excerpt,
+                images: [article.featuredImage || ''],
+            },
         }
     } catch (e) {
         return { title: 'Article | TecnoMais' }
@@ -95,12 +110,44 @@ export default async function ArticlePage({ params }: { params: { slug: string }
         console.error('Error fetching trending for article sidebar:', e);
     }
 
-    const siteUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000'
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://tecnomais.online'
     const shareUrl = `${siteUrl}/artigo/${article.slug}`
     const shareTitle = article.title
 
+    const jsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'NewsArticle',
+        headline: article.title,
+        description: article.excerpt,
+        image: article.featuredImage ? [article.featuredImage] : [],
+        datePublished: article.publishedDate.toISOString(),
+        dateModified: (article as any).updatedAt?.toISOString() || article.publishedDate.toISOString(),
+        author: {
+            '@type': 'Person',
+            name: article.author,
+            url: `${siteUrl}/autor/${encodeURIComponent(article.author)}`,
+        },
+        publisher: {
+            '@type': 'Organization',
+            name: 'TecnoMais',
+            url: siteUrl,
+            logo: {
+                '@type': 'ImageObject',
+                url: `${siteUrl}/favicon-32x32.png`,
+            },
+        },
+        mainEntityOfPage: {
+            '@type': 'WebPage',
+            '@id': shareUrl,
+        },
+    }
+
     return (
         <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <Navbar theme="dark" />
             <main className="min-h-screen bg-white">
 
