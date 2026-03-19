@@ -7,11 +7,6 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 export const metadata: Metadata = {
   title: "TecnoMais - Transforming Ideas into Innovation",
   description: "Your premium publication for AI tools, software engineering, and global technology trends.",
-  icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/favicon.ico",
-  },
 };
 
 export default function RootLayout({
