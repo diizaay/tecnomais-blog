@@ -1,0 +1,81 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+model User {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  email        String   @unique
+  passwordHash String
+  name         String?
+  role         Role     @default(ADMIN)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model Article {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  slug          String   @unique
+  excerpt       String
+  content       String
+  featuredImage String?
+  author        String
+  publishedDate DateTime @default(now())
+  seoTitle      String?
+  seoDesc       String?
+
+  // Relations
+  categoryIds String[]   @db.ObjectId
+  categories  Category[] @relation(fields: [categoryIds], references: [id])
+
+  // MongoDB doesn't support implicit many-to-many easily with Prisma out of the box without array fields,
+  // Using explicit array for tags
+  tagIds String[] @db.ObjectId
+  tags   Tag[]    @relation(fields: [tagIds], references: [id])
+
+  comments Comment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  name        String  @unique
+  slug        String  @unique
+  description String?
+
+  articleIds String[]  @db.ObjectId
+  articles   Article[] @relation(fields: [articleIds], references: [id])
+}
+
+model Tag {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  name String @unique
+  slug String @unique
+
+  articleIds String[]  @db.ObjectId
+  articles   Article[] @relation(fields: [articleIds], references: [id])
+}
+
+model Comment {
+  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  content    String
+  authorName String
+
+  articleId String  @db.ObjectId
+  article   Article @relation(fields: [articleId], references: [id])
+
+  createdAt DateTime @default(now())
+}

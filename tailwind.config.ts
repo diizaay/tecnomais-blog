@@ -8,9 +8,18 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["var(--font-inter)", "sans-serif"],
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        apple: {
+          gray: "var(--apple-gray)",
+          blue: "var(--apple-blue)",
+          dark: "var(--apple-dark)",
+          light: "var(--apple-light-text)",
+        }
       },
     },
   },

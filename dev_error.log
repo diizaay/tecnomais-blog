@@ -1,0 +1,21 @@
+
+> premium-tech-blog@0.1.0 dev
+> next dev
+
+  Ôû▓ Next.js 14.2.35
+  - Local:        http://localhost:3000
+  - Environments: .env
+
+ Ô£ô Starting...
+ReferenceError: require is not defined
+    at Object.webpack (file:///C:/Users/dhiva/Documents/Angotech/premium-tech-blog/next.config.mjs:14:28)
+    at getBaseWebpackConfig (C:\Users\dhiva\Documents\Angotech\premium-tech-blog\node_modules\next\dist\build\webpack-config.js:1838:32)
+    at async Promise.all (index 0)
+    at async Span.traceAsyncFn (C:\Users\dhiva\Documents\Angotech\premium-tech-blog\node_modules\next\dist\trace\trace.js:154:20)
+    at async Span.traceAsyncFn (C:\Users\dhiva\Documents\Angotech\premium-tech-blog\node_modules\next\dist\trace\trace.js:154:20)
+    at async HotReloaderWebpack.start (C:\Users\dhiva\Documents\Angotech\premium-tech-blog\node_modules\next\dist\server\dev\hot-reloader-webpack.js:621:37)
+    at async startWatcher (C:\Users\dhiva\Documents\Angotech\premium-tech-blog\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js:156:5)
+    at async setupDevBundler (C:\Users\dhiva\Documents\Angotech\premium-tech-blog\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js:775:20)
+    at async Span.traceAsyncFn (C:\Users\dhiva\Documents\Angotech\premium-tech-blog\node_modules\next\dist\trace\trace.js:154:20)
+    at async initialize (C:\Users\dhiva\Documents\Angotech\premium-tech-blog\node_modules\next\dist\server\lib\router-server.js:81:30)
+[?25h

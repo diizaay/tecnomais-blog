@@ -1,0 +1,87 @@
+datasource db {
+  provider = "mongodb"
+  url      = "mongodb+srv://pontocriativo:k5hrAgQV3Xtgdcer@cluster0.xe6vg0v.mongodb.net/premium-tech-blog?appName=Cluster0"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  email        String   @unique
+  passwordHash String
+  name         String?
+  role         Role     @default(ADMIN)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model Article {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  slug          String    @unique
+  excerpt       String
+  content       String
+  featuredImage String?
+  author        String
+  publishedDate DateTime  @default(now())
+  seoTitle      String?
+  seoDesc       String?
+  
+  // Relations
+  categoryIds   String[]  @db.ObjectId
+  categories    Category[] @relation(fields: [categoryIds], references: [id])
+  
+  tagIds        String[]  @db.ObjectId
+  tags          Tag[]     @relation(fields: [tagIds], references: [id])
+
+  comments      Comment[]
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Category {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  name        String    @unique
+  slug        String    @unique
+  description String?
+  
+  articleIds  String[]  @db.ObjectId
+  articles    Article[] @relation(fields: [articleIds], references: [id])
+}
+
+model Tag {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  name        String    @unique
+  slug        String    @unique
+
+  articleIds  String[]  @db.ObjectId
+  articles    Article[] @relation(fields: [articleIds], references: [id])
+}
+
+model Comment {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  content     String
+  authorName  String
+  
+  articleId   String   @db.ObjectId
+  article     Article  @relation(fields: [articleId], references: [id])
+  
+  createdAt   DateTime @default(now())
+}
+
+model Subscriber {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  email     String   @unique
+  name      String?
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

@@ -1,0 +1,27 @@
+
+> premium-tech-blog@0.1.0 dev
+> next dev
+
+  Ôû▓ Next.js 14.2.35
+  - Local:        http://localhost:3000
+  - Environments: .env
+
+ Ô£ô Starting...
+ Ô£ô Ready in 3.3s
+ Ôùï Compiling / ...
+ Ô£ô Compiled / in 10.2s (1432 modules)
+ Ô£ô Compiled in 724ms (697 modules)
+ GET / 200 in 4775ms
+ GET /?id=23e687ee-acdb-48b4-bc99-eef85d033d51&vscodeBrowserReqId=1773442685711 200 in 14256ms
+ Ôùï Compiling /favicon.ico ...
+ Ô£ô Compiled /favicon.ico in 4.6s (758 modules)
+ GET /favicon.ico 200 in 4935ms
+ Ôùï Compiling /artigo/[slug] ...
+ Ô£ô Compiled /artigo/[slug] in 1146ms (1461 modules)
+ Ôùï Compiling /categoria/[slug] ...
+ Ô£ô Compiled /categoria/[slug] in 1235ms (1433 modules)
+ Ôùï Compiling /admin/artigos ...
+ Ô£ô Compiled /admin/artigos in 2.7s (1677 modules)
+ GET /admin/artigos 200 in 3660ms
+ Ôùï Compiling /admin/artigos/[id]/editar ...
+ Ô£ô Compiled /admin/artigos/[id]/editar in 3.2s (1896 modules)

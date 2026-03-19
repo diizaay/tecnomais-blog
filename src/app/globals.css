@@ -2,26 +2,94 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #ffffff;
+    --foreground: #1d1d1f;
+    --apple-gray: #f5f5f7;
+    --apple-blue: #0066cc;
+    --apple-dark: #1d1d1f;
+    --apple-light-text: #86868b;
+  }
+
+  body {
+    background-color: #fbfbfd;
+    color: var(--foreground);
+    @apply antialiased selection:bg-blue-100 selection:text-blue-900;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .bg-ambient {
+    background-image:
+      radial-gradient(circle at 10% 20%, rgba(0, 102, 204, 0.03) 0%, transparent 40%),
+      radial-gradient(circle at 90% 80%, rgba(0, 102, 204, 0.03) 0%, transparent 40%),
+      radial-gradient(circle at 50% 50%, rgba(100, 50, 255, 0.02) 0%, transparent 60%);
+  }
+
+  .apple-card {
+    @apply bg-white rounded-[32px] border border-gray-100 shadow-sm transition-all duration-300;
+  }
+
+  .glass-nav {
+    @apply bg-[#ffffff]/70 backdrop-blur-xl border-b border-white/20;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+  }
+
+  .h-section {
+    @apply text-[48px] md:text-[64px] font-bold leading-[1.05] tracking-tight;
+  }
+
+  .btn-apple-primary {
+    @apply inline-flex items-center justify-center bg-[#0066cc] text-white rounded-full px-6 py-3 text-[17px] font-medium transition-all hover:bg-[#0055b3] hover:scale-[1.02] shadow-sm;
+  }
+
+  .btn-apple-secondary {
+    @apply inline-flex items-center justify-center bg-gray-100 text-[#1d1d1f] rounded-full px-6 py-3 text-[17px] font-medium transition-all hover:bg-gray-200 hover:scale-[1.02];
+  }
+
+  .prose-content p {
+    @apply text-[20px] font-normal leading-[1.6] text-[#1d1d1f] mb-8;
+  }
+
+  .prose-content h1 {
+    @apply text-[40px] font-bold mt-12 mb-6 tracking-tight;
+  }
+
+  .prose-content h2 {
+    @apply text-[32px] font-bold mt-12 mb-6 tracking-tight;
+  }
+
+  .prose-content h3 {
+    @apply text-[24px] font-semibold mt-8 mb-4 tracking-tight;
+  }
+
+  .prose-content ul {
+    @apply list-disc list-inside text-[21px] leading-relaxed text-[#1d1d1f] mb-6 space-y-2;
+  }
+
+  .prose-content strong,
+  .prose-content b {
+    @apply font-bold text-black;
+  }
+
+  .prose-content a {
+    @apply text-[#0066cc] underline hover:text-[#0055b3] transition-colors;
+  }
+
+  .prose-content img {
+    @apply my-8 shadow-sm;
+    max-width: 100%;
+    height: auto;
+  }
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+/* --- ReactQuill Image Resize Overrides --- */
+.ql-editor img {
+  display: inline-block;
+}
+
+/* Ensure handles show above relative content */
+.ql-editor .ql-image-resize-module {
+  z-index: 50;
 }
