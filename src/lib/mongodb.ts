@@ -1,28 +1,35 @@
 import { MongoClient } from 'mongodb'
 
-if (!process.env.DATABASE_URL) {
-    throw new Error('Invalid/Missing environment variable: "DATABASE_URL"')
-}
-
-const uri = process.env.DATABASE_URL
 const options = {}
 
 let client: MongoClient
 let clientPromise: Promise<MongoClient>
 
-// @ts-ignore
 if (process.env.NODE_ENV === 'development') {
+    // In development mode, use a global variable so that the value
+    // is preserved across module reloads caused by HMR (Hot Module Replacement).
     // @ts-ignore
     if (!global._mongoClientPromise) {
-        client = new MongoClient(uri, options)
-        // @ts-ignore
-        global._mongoClientPromise = client.connect()
+        const uri = process.env.DATABASE_URL
+        if (uri) {
+            client = new MongoClient(uri, options)
+            // @ts-ignore
+            global._mongoClientPromise = client.connect()
+        }
     }
     // @ts-ignore
     clientPromise = global._mongoClientPromise
 } else {
-    client = new MongoClient(uri, options)
-    clientPromise = client.connect()
+    // In production mode, it's best to not use a global variable.
+    const uri = process.env.DATABASE_URL
+    if (uri) {
+        client = new MongoClient(uri, options)
+        clientPromise = client.connect()
+    } else {
+        // Return a dummy promise that will fail at runtime if the DB is actually hit, 
+        // but won't crash the build process at the top level.
+        clientPromise = Promise.reject(new Error('DATABASE_URL is missing'))
+    }
 }
 
 export default clientPromise

@@ -4,10 +4,11 @@ import { MongoClient, ObjectId } from 'mongodb'
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
-const uri = process.env.DATABASE_URL || ""
-const client = new MongoClient(uri)
-
 export async function GET() {
+  const uri = process.env.DATABASE_URL
+  if (!uri) return NextResponse.json([], { status: 200 })
+
+  const client = new MongoClient(uri)
   try {
     await client.connect()
     const db = client.db()
@@ -33,19 +34,22 @@ export async function GET() {
 }
 
 export async function DELETE(req: Request) {
+  const uri = process.env.DATABASE_URL
+  if (!uri) return NextResponse.json({ error: 'Config missing' }, { status: 500 })
+
   try {
     const { id } = await req.json()
     if (!id) return NextResponse.json({ error: 'ID required' }, { status: 400 })
 
+    const client = new MongoClient(uri)
     await client.connect()
     const db = client.db()
     await db.collection('Subscriber').deleteOne({ _id: new ObjectId(id) })
 
+    await client.close()
     return NextResponse.json({ success: true })
   } catch (error: any) {
     console.error('Admin Subscribers DELETE Error:', error)
     return NextResponse.json({ error: 'Failed' }, { status: 500 })
-  } finally {
-    await client.close()
   }
 }

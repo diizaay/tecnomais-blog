@@ -1,24 +1,25 @@
-import { NextResponse } from 'next/server'
-import prisma from '@/lib/prisma'
+import { NextRequest, NextResponse } from 'next/server'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
 export const fetchCache = 'force-no-store'
 
-export async function GET(request: Request) {
-    let query = ''
+export async function GET(request: NextRequest) {
     try {
-        const { searchParams } = new URL(request.url)
-        query = searchParams.get('q') || ''
-    } catch (e) {
-        return NextResponse.json({ articles: [] })
-    }
+        const query = request.nextUrl.searchParams.get('q')
 
-    if (!query || query.length < 2) {
-        return NextResponse.json({ articles: [] })
-    }
+        if (!query || query.length < 2) {
+            return NextResponse.json({ articles: [] })
+        }
 
-    try {
+        // Defensive check for build time
+        if (!process.env.DATABASE_URL) {
+            return NextResponse.json({ articles: [] })
+        }
+
+        // Dynamic import to avoid top-level Prisma instantiation during build
+        const { default: prisma } = await import('@/lib/prisma')
+
         const articles = await prisma.article.findMany({
             where: {
                 OR: [
@@ -40,6 +41,6 @@ export async function GET(request: Request) {
         return NextResponse.json({ articles })
     } catch (error) {
         console.error('Search error:', error)
-        return new NextResponse('Internal Error', { status: 500 })
+        return NextResponse.json({ articles: [] }, { status: 500 })
     }
 }
