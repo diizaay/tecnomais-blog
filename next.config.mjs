@@ -102,3 +102,5 @@ const nextConfig = {
 };
 
 export default nextConfig;
+// Trigger redeploy of stable English version
+
