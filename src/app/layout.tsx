@@ -62,6 +62,11 @@ export const metadata: Metadata = {
     ],
   },
   manifest: "/site.webmanifest",
+  verification: {
+    other: {
+      monetag: "00a11238016e2c715d356847ba63be4e",
+    },
+  },
 };
 
 export default function RootLayout({
