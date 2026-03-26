@@ -1,4 +1,5 @@
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Suspense } from 'react';
 import { Inter } from "next/font/google";
 import Navbar from "@/components/Navbar";
@@ -45,6 +46,7 @@ export default async function LocaleLayout({
         </main>
         <Footer lang={lang} dict={dict} />
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
