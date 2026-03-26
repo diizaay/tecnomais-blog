@@ -1,4 +1,5 @@
 import { Analytics } from '@vercel/analytics/react';
+import { Suspense } from 'react';
 import { Inter } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -35,7 +36,9 @@ export default async function LocaleLayout({
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
       </head>
       <body className={`${inter.variable} font-sans bg-[#fbfbfd] text-[#1d1d1f] antialiased min-h-screen flex flex-col`}>
-        <ProgressBar />
+        <Suspense fallback={null}>
+          <ProgressBar />
+        </Suspense>
         <Navbar lang={lang} dict={dict} />
         <main className="flex-1 pt-20">
           {children}
