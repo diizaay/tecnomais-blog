@@ -30,16 +30,9 @@ export default async function LocaleLayout({
   return (
     <html lang={lang}>
       <head>
+        <meta name="monetag" content="00a11238016e2c715d356847ba63be4e" />
+        <script src="https://quge5.com/88/tag.min.js" data-zone="223401" async data-cfasync="false"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <script dangerouslySetInnerHTML={{ __html: `
-          if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.getRegistrations().then(function(registrations) {
-              for(let registration of registrations) {
-                registration.unregister();
-              }
-            });
-          }
-        `}} />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://res.cloudinary.com" />
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
