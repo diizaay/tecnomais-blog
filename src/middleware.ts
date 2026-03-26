@@ -4,7 +4,7 @@ import { getToken } from 'next-auth/jwt'
 import { match as matchLocale } from '@formatjs/intl-localematcher'
 import Negotiator from 'negotiator'
 
-const locales = ['en', 'pt']
+const locales = ['en']
 const defaultLocale = 'en'
 const ADMIN_SLUG = process.env.ADMIN_PANEL_SLUG || 'tecnomais-portal'
 

@@ -101,22 +101,6 @@ export default function Navbar({ theme = 'light', lang = 'en', dict }: NavbarPro
 
                 {/* Actions */}
                 <div className="hidden md:flex items-center space-x-6">
-                    {/* Language Switcher */}
-                    <div className="flex items-center bg-gray-100/50 dark:bg-white/5 rounded-full p-1 border border-gray-200/50 dark:border-white/10">
-                        <Link 
-                            href={getLocalizedPath('en')}
-                            className={`flex items-center space-x-1 text-[11px] font-bold px-2.5 py-1 rounded-full transition-all ${lang === 'en' ? 'bg-[#0066cc] text-white shadow-sm' : 'text-gray-500 hover:text-[#0066cc]'}`}
-                        >
-                            <span>EN</span>
-                        </Link>
-                        <Link 
-                            href={getLocalizedPath('pt')}
-                            className={`flex items-center space-x-1 text-[11px] font-bold px-2.5 py-1 rounded-full transition-all ${lang === 'pt' ? 'bg-[#0066cc] text-white shadow-sm' : 'text-gray-500 hover:text-[#0066cc]'}`}
-                        >
-                            <span>PT</span>
-                        </Link>
-                    </div>
-
                     <button 
                         onClick={() => setIsSearchOpen(true)}
                         className={`transition-colors ${isDark ? 'text-white/80 hover:text-white' : 'text-gray-500 hover:text-[#1d1d1f]'}`}
@@ -157,24 +141,6 @@ export default function Navbar({ theme = 'light', lang = 'en', dict }: NavbarPro
                         ))}
                     </nav>
                     <div className="flex flex-col space-y-6 pt-6 border-t border-gray-50">
-                        <div className="flex items-center justify-center space-x-8">
-                             <Link 
-                                href={getLocalizedPath('en')} 
-                                className={`text-[15px] font-bold flex items-center ${lang === 'en' ? 'text-[#0066cc]' : 'text-gray-400'}`}
-                                onClick={() => setMobileMenuOpen(false)}
-                             >
-                                <Globe size={16} className="mr-2" />
-                                English
-                             </Link>
-                             <Link 
-                                href={getLocalizedPath('pt')} 
-                                className={`text-[15px] font-bold flex items-center ${lang === 'pt' ? 'text-[#0066cc]' : 'text-gray-400'}`}
-                                onClick={() => setMobileMenuOpen(false)}
-                             >
-                                <Globe size={16} className="mr-2" />
-                                Português
-                             </Link>
-                        </div>
                         <div className="flex items-center justify-between gap-4">
                             <button 
                                 onClick={() => {
