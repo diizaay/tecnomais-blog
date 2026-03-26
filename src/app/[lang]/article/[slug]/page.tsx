@@ -265,47 +265,36 @@ export default async function ArticlePage({ params: { slug, lang } }: { params: 
                             <article className="lg:flex-1 max-w-3xl mx-auto lg:mx-0">
                                 <AdPlaceholder format="320x50" />
                                 
-                                <div
-                                    className="mt-8 mb-16 prose-content"
-                                    dangerouslySetInnerHTML={{ 
-                                        __html: (() => {
-                                            const content = article.content
-                                                .replace(/&lt;/g, '<')
-                                                .replace(/&gt;/g, '>')
-                                                .replace(/&quot;/g, '"')
-                                                .replace(/&#39;/g, "'")
-                                                .replace(/&amp;/g, '&');
-                                            
-                                            // Strategic ad injection: Find the middle paragraph
-                                            const paragraphs = content.split('</p>');
-                                            if (paragraphs.length > 4) {
-                                                const middleIndex = Math.floor(paragraphs.length / 2);
-                                                const adHtml = `
-                                                    <div class="ad-in-article my-12 flex justify-center w-full">
-                                                        <div class="flex flex-col items-center">
-                                                            <span class="text-[10px] text-gray-400 uppercase tracking-widest mb-2">Advertisement</span>
-                                                            <div class="w-[300px] h-[250px] overflow-hidden">
-                                                                <script type="text/javascript">
-                                                                    atOptions = {
-                                                                        'key' : '5d4ff7c9247862b7ba91f0094f598519',
-                                                                        'format' : 'iframe',
-                                                                        'height' : 250,
-                                                                        'width' : 300,
-                                                                        'params' : {}
-                                                                    };
-                                                                </script>
-                                                                <script type="text/javascript" src="https://www.highperformanceformat.com/5d4ff7c9247862b7ba91f0094f598519/invoke.js"></script>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                `;
-                                                paragraphs.splice(middleIndex, 0, adHtml);
-                                                return paragraphs.join('</p>');
-                                            }
-                                            return content;
-                                        })()
-                                    }}
-                                />
+                                {(() => {
+                                    const rawContent = article.content
+                                        .replace(/&lt;/g, '<')
+                                        .replace(/&gt;/g, '>')
+                                        .replace(/&quot;/g, '"')
+                                        .replace(/&#39;/g, "'")
+                                        .replace(/&amp;/g, '&');
+                                    
+                                    const paragraphs = rawContent.split('</p>');
+                                    if (paragraphs.length > 5) {
+                                        const mid = Math.floor(paragraphs.length / 2);
+                                        const firstHalf = paragraphs.slice(0, mid).join('</p>') + '</p>';
+                                        const secondHalf = paragraphs.slice(mid).join('</p>');
+                                        
+                                        return (
+                                            <>
+                                                <div className="mt-8 prose-content" dangerouslySetInnerHTML={{ __html: firstHalf }} />
+                                                <AdPlaceholder format="300x250" />
+                                                <div className="mb-16 prose-content" dangerouslySetInnerHTML={{ __html: secondHalf }} />
+                                            </>
+                                        );
+                                    }
+                                    
+                                    return (
+                                        <div
+                                            className="mt-8 mb-16 prose-content"
+                                            dangerouslySetInnerHTML={{ __html: rawContent }}
+                                        />
+                                    );
+                                })()}
 
                                 <AdPlaceholder format="native" />
                                 
