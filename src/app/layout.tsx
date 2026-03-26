@@ -77,6 +77,7 @@ export default function RootLayout({
   return (
     <html lang="pt">
       <head>
+        <meta name="monetag" content="00a11238016e2c715d356847ba63be4e" />
         {/* Preconnect to external domains for faster loading */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
