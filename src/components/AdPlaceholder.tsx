@@ -14,7 +14,7 @@ export default function AdPlaceholder({ position }: AdPlaceholderProps) {
     }
 
     // Always show these ads for now as requested
-    const AD_ACTIVE = true
+    const AD_ACTIVE = false
 
     if (!AD_ACTIVE) return null
 
