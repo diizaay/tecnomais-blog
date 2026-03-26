@@ -23,7 +23,8 @@
   "article": {
     "author": "Author",
     "published": "Published on",
-    "share": "Share this article",
+    "share": "Share",
+    "copied": "Link copied to clipboard!",
     "notFound": "Article Not Found",
     "backHome": "Back to Homepage",
     "readTime": "min read",

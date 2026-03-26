@@ -242,7 +242,7 @@ export default async function ArticlePage({ params: { slug, lang } }: { params: 
                                     </div>
                                 </div>
 
-                                <ShareButtons shareUrl={shareUrl} shareTitle={shareTitle} />
+                                <ShareButtons shareUrl={shareUrl} shareTitle={shareTitle} dict={{ share: dict.article.share, copied: dict.article.copied }} />
                             </div>
                         </div>
                     </div>
@@ -258,7 +258,7 @@ export default async function ArticlePage({ params: { slug, lang } }: { params: 
                         
                         {/* Left Sticky Share Bar */}
                         <aside className="hidden xl:block w-12 pt-10">
-                            <ShareButtons shareUrl={shareUrl} shareTitle={shareTitle} variant="sticky" />
+                            <ShareButtons shareUrl={shareUrl} shareTitle={shareTitle} variant="sticky" dict={{ share: dict.article.share, copied: dict.article.copied }} />
                         </aside>
 
 

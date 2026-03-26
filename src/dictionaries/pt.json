@@ -23,7 +23,8 @@
   "article": {
     "author": "Autor",
     "published": "Publicado em",
-    "share": "Partilhar este artigo",
+    "share": "Partilhar",
+    "copied": "Link copiado para a área de transferência!",
     "notFound": "Artigo Não Encontrado",
     "backHome": "Voltar para o Início",
     "readTime": "min de leitura",

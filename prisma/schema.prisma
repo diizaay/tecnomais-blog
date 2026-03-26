@@ -25,36 +25,60 @@ enum Role {
 model Article {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
   title         String
-  slug          String    @unique
+  slug          String
   excerpt       String
   content       String
   featuredImage String?
-  author        String
+  
+  // Relations
+  authorId      String?   @db.ObjectId
+  author        Author?   @relation(fields: [authorId], references: [id])
+  
   publishedDate DateTime  @default(now())
   seoTitle      String?
   seoDesc       String?
   
-  // Relations
   categoryIds   String[]  @db.ObjectId
   categories    Category[] @relation(fields: [categoryIds], references: [id])
   
   tagIds        String[]  @db.ObjectId
   tags          Tag[]     @relation(fields: [tagIds], references: [id])
-
+  
   comments      Comment[]
-
+  
+  language      String    @default("pt")
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+
+  @@unique([slug, language])
+}
+
+model Author {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  slug        String
+  bio         String
+  avatar      String?
+  articles    Article[]
+  language    String    @default("pt")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([slug, language])
+  @@unique([name, language])
 }
 
 model Category {
   id          String    @id @default(auto()) @map("_id") @db.ObjectId
-  name        String    @unique
-  slug        String    @unique
+  name        String
+  slug        String
   description String?
   
   articleIds  String[]  @db.ObjectId
   articles    Article[] @relation(fields: [articleIds], references: [id])
+  language    String    @default("pt")
+
+  @@unique([slug, language])
 }
 
 model Tag {
