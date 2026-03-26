@@ -212,8 +212,9 @@ export default async function Home({ params: { lang } }: { params: { lang: Local
                   ))}
                 </div>
 
-                <div className="mt-16">
-                    <AdPlaceholder position="sidebar" />
+                <div className="mt-16 space-y-12">
+                    <AdPlaceholder format="160x300" />
+                    <AdPlaceholder format="300x250" />
                 </div>
               </div>
             </aside>

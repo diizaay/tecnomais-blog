@@ -1,28 +1,69 @@
 import React from 'react'
 
 interface AdPlaceholderProps {
-    position: 'header' | 'in-content' | 'sidebar' | 'footer'
+    position?: 'header' | 'in-content' | 'sidebar' | 'footer'
+    format?: '300x250' | '160x300' | '320x50' | 'native'
 }
 
-export default function AdPlaceholder({ position }: AdPlaceholderProps) {
-    // Configurable dimensions based on placement
+export default function AdPlaceholder({ position, format = '300x250' }: AdPlaceholderProps) {
+    // Configurable dimensions based on format
     const dimensions = {
-        'header': 'w-full h-[90px]',
-        'in-content': 'w-full h-[250px]',
-        'sidebar': 'w-[300px] h-[250px]',
-        'footer': 'w-full h-[90px]'
+        '300x250': 'w-[300px] h-[250px]',
+        '160x300': 'w-[160px] h-[300px]',
+        '320x50': 'w-[320px] h-[50px]',
+        'native': 'w-full min-h-[100px]'
     }
 
-    // Always show these ads for now as requested
-    const AD_ACTIVE = false
+    const AD_ACTIVE = true
 
     if (!AD_ACTIVE) return null
 
-    if (position === 'sidebar' || position === 'in-content') {
-        return (
-            <div className="w-full flex flex-col items-center my-8">
-                <span className="text-[10px] text-gray-400 uppercase tracking-widest mb-2">Advertisement</span>
-                <div className={`ad-container ${dimensions[position]} overflow-hidden`}>
+    const renderAd = () => {
+        switch (format) {
+            case 'native':
+                return (
+                    <>
+                        <script async={true} data-cfasync="false" src="https://pl28985299.profitablecpmratenetwork.com/5b95a5dd0ddbde1c299fda173e0428f2/invoke.js"></script>
+                        <div id="container-5b95a5dd0ddbde1c299fda173e0428f2"></div>
+                    </>
+                )
+            case '160x300':
+                return (
+                    <div dangerouslySetInnerHTML={{
+                        __html: `
+                        <script type="text/javascript">
+                            atOptions = {
+                                'key' : '5ac183ef3bfadd4ae406dc3be1bb6909',
+                                'format' : 'iframe',
+                                'height' : 300,
+                                'width' : 160,
+                                'params' : {}
+                            };
+                        </script>
+                        <script type="text/javascript" src="https://www.highperformanceformat.com/5ac183ef3bfadd4ae406dc3be1bb6909/invoke.js"></script>
+                        `}} 
+                    />
+                )
+            case '320x50':
+                return (
+                    <div dangerouslySetInnerHTML={{
+                        __html: `
+                        <script type="text/javascript">
+                            atOptions = {
+                                'key' : '15c1ab0412e2ef634b63d8cc4697344e',
+                                'format' : 'iframe',
+                                'height' : 50,
+                                'width' : 320,
+                                'params' : {}
+                            };
+                        </script>
+                        <script type="text/javascript" src="https://www.highperformanceformat.com/15c1ab0412e2ef634b63d8cc4697344e/invoke.js"></script>
+                        `}} 
+                    />
+                )
+            case '300x250':
+            default:
+                return (
                     <div dangerouslySetInnerHTML={{
                         __html: `
                         <script type="text/javascript">
@@ -37,14 +78,16 @@ export default function AdPlaceholder({ position }: AdPlaceholderProps) {
                         <script type="text/javascript" src="https://www.highperformanceformat.com/5d4ff7c9247862b7ba91f0094f598519/invoke.js"></script>
                         `}} 
                     />
-                </div>
-            </div>
-        )
+                )
+        }
     }
 
     return (
-        <div className="w-full flex justify-center my-8">
-            <div id={`ad-slot-${position}`} className={`ad-container ${dimensions[position]} bg-gray-50/5 border border-gray-100/10 rounded-xl flex items-center justify-center`} />
+        <div className="w-full flex flex-col items-center my-8">
+            <span className="text-[10px] text-gray-400 uppercase tracking-widest mb-2">Advertisement</span>
+            <div className={`ad-container ${dimensions[format]} overflow-hidden`}>
+                {renderAd()}
+            </div>
         </div>
     )
 }

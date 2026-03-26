@@ -261,20 +261,53 @@ export default async function ArticlePage({ params: { slug, lang } }: { params: 
                             <ShareButtons shareUrl={shareUrl} shareTitle={shareTitle} variant="sticky" dict={{ share: dict.article.share, copied: dict.article.copied }} />
                         </aside>
 
-
                             {/* Main Content */}
                             <article className="lg:flex-1 max-w-3xl mx-auto lg:mx-0">
+                                <AdPlaceholder format="320x50" />
+                                
                                 <div
                                     className="mt-8 mb-16 prose-content"
                                     dangerouslySetInnerHTML={{ 
-                                        __html: article.content
-                                            .replace(/&lt;/g, '<')
-                                            .replace(/&gt;/g, '>')
-                                            .replace(/&quot;/g, '"')
-                                            .replace(/&#39;/g, "'")
-                                            .replace(/&amp;/g, '&')
+                                        __html: (() => {
+                                            const content = article.content
+                                                .replace(/&lt;/g, '<')
+                                                .replace(/&gt;/g, '>')
+                                                .replace(/&quot;/g, '"')
+                                                .replace(/&#39;/g, "'")
+                                                .replace(/&amp;/g, '&');
+                                            
+                                            // Strategic ad injection: Find the middle paragraph
+                                            const paragraphs = content.split('</p>');
+                                            if (paragraphs.length > 4) {
+                                                const middleIndex = Math.floor(paragraphs.length / 2);
+                                                const adHtml = `
+                                                    <div class="ad-in-article my-12 flex justify-center w-full">
+                                                        <div class="flex flex-col items-center">
+                                                            <span class="text-[10px] text-gray-400 uppercase tracking-widest mb-2">Advertisement</span>
+                                                            <div class="w-[300px] h-[250px] overflow-hidden">
+                                                                <script type="text/javascript">
+                                                                    atOptions = {
+                                                                        'key' : '5d4ff7c9247862b7ba91f0094f598519',
+                                                                        'format' : 'iframe',
+                                                                        'height' : 250,
+                                                                        'width' : 300,
+                                                                        'params' : {}
+                                                                    };
+                                                                </script>
+                                                                <script type="text/javascript" src="https://www.highperformanceformat.com/5d4ff7c9247862b7ba91f0094f598519/invoke.js"></script>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                `;
+                                                paragraphs.splice(middleIndex, 0, adHtml);
+                                                return paragraphs.join('</p>');
+                                            }
+                                            return content;
+                                        })()
                                     }}
                                 />
+
+                                <AdPlaceholder format="native" />
                                 
                                 {article.tags && article.tags.length > 0 && (
                                     <div className="mb-16 pt-12 border-t border-gray-100">
@@ -320,11 +353,13 @@ export default async function ArticlePage({ params: { slug, lang } }: { params: 
                                         </div>
                                     </div>
                                 )}
-                           </article>
+                            </article>
 
                             {/* Sidebar */}
                             <aside className="lg:w-[320px]">
                                 <div className="sticky top-32 space-y-12">
+                                    <AdPlaceholder format="160x300" />
+                                    
                                     <div>
                                         <h3 className="text-[14px] uppercase tracking-widest font-bold text-[#1d1d1f] mb-6 flex items-center">
                                             <div className="w-1 h-4 bg-[#0066cc] mr-3"></div>
@@ -350,6 +385,8 @@ export default async function ArticlePage({ params: { slug, lang } }: { params: 
                                             ))}
                                         </div>
                                     </div>
+                                    
+                                    <AdPlaceholder format="300x250" />
                                     
                                     <div className="bg-[#f5f5f7] p-8 rounded-[32px] border border-gray-100 relative overflow-hidden group">
                                         <div className="absolute top-0 right-0 w-24 h-24 bg-[#0066cc]/5 rounded-full -mr-12 -mt-12 transition-transform group-hover:scale-110"></div>
