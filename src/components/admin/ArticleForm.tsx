@@ -17,11 +17,12 @@ ReactQuill.displayName = 'ReactQuill'
 
 
 interface ArticleFormProps {
-    initialData?: Article | null
+    initialData?: any
     categories: Category[]
+    authors: any[]
 }
 
-export default function ArticleForm({ initialData, categories }: ArticleFormProps) {
+export default function ArticleForm({ initialData, categories, authors }: ArticleFormProps) {
     const router = useRouter()
     const quillRef = useRef<any>(null)
     const [isLoading, setIsLoading] = useState(false)
@@ -33,9 +34,9 @@ export default function ArticleForm({ initialData, categories }: ArticleFormProp
         excerpt: initialData?.excerpt || '',
         content: initialData?.content || '',
         featuredImage: initialData?.featuredImage || '',
-        categoryIds: (initialData as any)?.categoryIds || [],
-        author: initialData?.author || 'AdminUser',
-        tags: (initialData as any)?.tags?.map((t: any) => t.name).join(', ') || '',
+        categoryIds: initialData?.categoryIds || [],
+        authorId: initialData?.authorId || (authors.length > 0 ? authors[0].id : ''),
+        tags: initialData?.tags?.map((t: any) => t.name).join(', ') || '',
     })
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -309,7 +310,20 @@ export default function ArticleForm({ initialData, categories }: ArticleFormProp
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label className="block text-[14px] font-medium text-[#1d1d1f] mb-2">Author</label>
-                    <input type="text" name="author" required value={formData.author} onChange={handleChange} className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-[15px] focus:outline-none focus:border-[#0066cc]" />
+                    <select 
+                        name="authorId" 
+                        required 
+                        value={formData.authorId} 
+                        onChange={(e) => setFormData(prev => ({ ...prev, authorId: e.target.value }))}
+                        className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-[15px] focus:outline-none focus:border-[#0066cc]"
+                    >
+                        <option value="">Select an Author</option>
+                        {authors.map((auth: any) => (
+                            <option key={auth.id} value={auth.id}>
+                                {auth.name}
+                            </option>
+                        ))}
+                    </select>
                 </div>
                 <div>
                     <label className="block text-[14px] font-medium text-[#1d1d1f] mb-2">Tags / Topics (Comma separated)</label>

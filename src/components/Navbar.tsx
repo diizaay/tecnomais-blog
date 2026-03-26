@@ -3,19 +3,23 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Search, Menu, X } from 'lucide-react'
+import { Search, Menu, X, Globe } from 'lucide-react'
 import Image from 'next/image'
 import { siteConfig } from '@/lib/siteConfig'
 import SearchOverlay from './SearchOverlay'
+import { usePathname } from 'next/navigation'
 
 interface NavbarProps {
     theme?: 'light' | 'dark'
+    lang?: string
+    dict?: any
 }
 
-export default function Navbar({ theme = 'light' }: NavbarProps) {
+export default function Navbar({ theme = 'light', lang = 'en', dict }: NavbarProps) {
     const [scrolled, setScrolled] = useState(false)
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const [isSearchOpen, setIsSearchOpen] = useState(false)
+    const pathname = usePathname()
 
     useEffect(() => {
         const handleScroll = () => {
@@ -26,6 +30,35 @@ export default function Navbar({ theme = 'light' }: NavbarProps) {
     }, [])
 
     const isDark = theme === 'dark' && !scrolled
+    
+    // Fallback translations if dict is missing
+    const t = dict?.navigation || {
+        home: 'Home',
+        categories: 'Categories',
+        newsletter: 'Newsletter'
+    }
+    const b = dict?.buttons || {
+        subscribe: 'Subscribe'
+    }
+
+    const categories = [
+        { name: 'News', slug: 'news', pt: 'Notícias', ptSlug: 'noticias' },
+        { name: 'AI Tools', slug: 'ai-tools', pt: 'Ferramentas IA', ptSlug: 'ferramentas-de-ia' },
+        { name: 'Software Comparisons', slug: 'software-comparisons', pt: 'Comparações', ptSlug: 'comparacoes' },
+        { name: 'Productivity Tools', slug: 'productivity-tools', pt: 'Produtividade', ptSlug: 'produtividade' },
+        { name: 'Programming Resources', slug: 'programming-resources', pt: 'Programação', ptSlug: 'programacao' },
+        { name: 'Technology Trends', slug: 'technology-trends', pt: 'Tendências', ptSlug: 'tendencias-tecnologicas' }
+    ]
+
+    const getLocalizedPath = (targetLang: string) => {
+        if (!pathname) return `/${targetLang}`
+        const segments = pathname.split('/')
+        if (segments[1] === 'en' || segments[1] === 'pt') {
+            segments[1] = targetLang
+            return segments.join('/')
+        }
+        return `/${targetLang}${pathname}`
+    }
 
     return (
         <motion.header
@@ -36,7 +69,7 @@ export default function Navbar({ theme = 'light' }: NavbarProps) {
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         >
             <div className="container mx-auto px-6 max-w-7xl flex items-center justify-between">
-                <Link href="/" className="font-bold text-[22px] tracking-tight flex items-center">
+                <Link href={`/${lang}`} className="font-bold text-[22px] tracking-tight flex items-center">
                     {siteConfig.logo.url ? (
                         <Image
                             src={siteConfig.logo.url}
@@ -54,28 +87,44 @@ export default function Navbar({ theme = 'light' }: NavbarProps) {
                 </Link>
 
                 {/* Desktop Nav */}
-                <nav className="hidden md:flex items-center space-x-8">
-                    {['News', 'AI Tools', 'Software Comparisons', 'Productivity Tools', 'Programming Resources', 'Technology Trends'].map((item) => (
+                <nav className="hidden lg:flex items-center space-x-8">
+                    {categories.map((cat) => (
                         <Link
-                            key={item}
-                            href={`/categoria/${item.toLowerCase().replace(' ', '-')}`}
-                            className={`text-[15px] font-medium transition-colors ${isDark ? 'text-white/80 hover:text-white' : 'text-gray-600 hover:text-[#1d1d1f]'}`}
+                            key={cat.name}
+                            href={`/${lang}/category/${lang === 'pt' ? cat.ptSlug : cat.slug}`}
+                            className={`text-[14px] font-medium transition-colors ${isDark ? 'text-white/80 hover:text-white' : 'text-gray-600 hover:text-[#1d1d1f]'}`}
                         >
-                            {item}
+                            {lang === 'pt' ? cat.pt : cat.name}
                         </Link>
                     ))}
                 </nav>
 
                 {/* Actions */}
                 <div className="hidden md:flex items-center space-x-6">
+                    {/* Language Switcher */}
+                    <div className="flex items-center bg-gray-100/50 dark:bg-white/5 rounded-full p-1 border border-gray-200/50 dark:border-white/10">
+                        <Link 
+                            href={getLocalizedPath('en')}
+                            className={`flex items-center space-x-1 text-[11px] font-bold px-2.5 py-1 rounded-full transition-all ${lang === 'en' ? 'bg-[#0066cc] text-white shadow-sm' : 'text-gray-500 hover:text-[#0066cc]'}`}
+                        >
+                            <span>EN</span>
+                        </Link>
+                        <Link 
+                            href={getLocalizedPath('pt')}
+                            className={`flex items-center space-x-1 text-[11px] font-bold px-2.5 py-1 rounded-full transition-all ${lang === 'pt' ? 'bg-[#0066cc] text-white shadow-sm' : 'text-gray-500 hover:text-[#0066cc]'}`}
+                        >
+                            <span>PT</span>
+                        </Link>
+                    </div>
+
                     <button 
                         onClick={() => setIsSearchOpen(true)}
                         className={`transition-colors ${isDark ? 'text-white/80 hover:text-white' : 'text-gray-500 hover:text-[#1d1d1f]'}`}
                     >
                         <Search size={20} />
                     </button>
-                    <Link href="/newsletter" className="btn-apple-primary !px-5 !py-2 !text-[14px]">
-                        Subscribe
+                    <Link href={`/${lang}/newsletter`} className="btn-apple-primary !px-5 !py-2 !text-[14px]">
+                        {b.subscribe}
                     </Link>
                 </div>
 
@@ -95,42 +144,56 @@ export default function Navbar({ theme = 'light' }: NavbarProps) {
                     animate={{ opacity: 1, height: 'auto' }}
                     className="md:hidden bg-white border-t border-gray-100 absolute top-full left-0 w-full p-6 shadow-xl"
                 >
-                    <nav className="flex flex-col space-y-4 mb-6">
-                        {['News', 'AI Tools', 'Software Comparisons', 'Productivity Tools', 'Programming Resources', 'Technology Trends'].map((item) => (
+                    <nav className="flex flex-col space-y-4 mb-6 text-center">
+                        {categories.map((cat) => (
                             <Link
-                                key={item}
-                                href={`/categoria/${item.toLowerCase().replace(' ', '-')}`}
-                                className="text-[17px] font-medium text-gray-800"
+                                key={cat.name}
+                                href={`/${lang}/category/${lang === 'pt' ? cat.ptSlug : cat.slug}`}
+                                className="text-[18px] font-semibold text-gray-800 hover:text-[#0066cc] transition-colors"
                                 onClick={() => setMobileMenuOpen(false)}
                             >
-                                {item}
+                                {lang === 'pt' ? cat.pt : cat.name}
                             </Link>
                         ))}
                     </nav>
-                    <div className="w-full flex items-center justify-between">
-                        <div className="relative flex-1 mr-4">
+                    <div className="flex flex-col space-y-6 pt-6 border-t border-gray-50">
+                        <div className="flex items-center justify-center space-x-8">
+                             <Link 
+                                href={getLocalizedPath('en')} 
+                                className={`text-[15px] font-bold flex items-center ${lang === 'en' ? 'text-[#0066cc]' : 'text-gray-400'}`}
+                                onClick={() => setMobileMenuOpen(false)}
+                             >
+                                <Globe size={16} className="mr-2" />
+                                English
+                             </Link>
+                             <Link 
+                                href={getLocalizedPath('pt')} 
+                                className={`text-[15px] font-bold flex items-center ${lang === 'pt' ? 'text-[#0066cc]' : 'text-gray-400'}`}
+                                onClick={() => setMobileMenuOpen(false)}
+                             >
+                                <Globe size={16} className="mr-2" />
+                                Português
+                             </Link>
+                        </div>
+                        <div className="flex items-center justify-between gap-4">
                             <button 
                                 onClick={() => {
                                     setMobileMenuOpen(false)
                                     setIsSearchOpen(true)
                                 }}
-                                className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10"
+                                className="bg-gray-50 border border-gray-200 rounded-full py-2.5 px-4 text-[15px] flex items-center text-gray-500 flex-1 justify-center"
                             >
-                                <Search size={18} />
+                                <Search size={18} className="mr-2" />
+                                {dict?.buttons?.search || 'Search'}
                             </button>
-                            <input
-                                type="text"
-                                placeholder="Search articles..."
-                                onFocus={() => {
-                                    setMobileMenuOpen(false)
-                                    setIsSearchOpen(true)
-                                }}
-                                className="w-full bg-gray-50 border border-gray-200 rounded-full py-2 pl-10 pr-4 text-[15px] focus:outline-none focus:border-blue-400"
-                            />
+                            <Link 
+                                href={`/${lang}/newsletter`} 
+                                className="btn-apple-primary !px-6 !py-2.5 !text-[15px] whitespace-nowrap flex-1 text-center"
+                                onClick={() => setMobileMenuOpen(false)}
+                            >
+                                {b.subscribe}
+                            </Link>
                         </div>
-                        <Link href="/newsletter" className="btn-apple-primary !px-5 !py-2 !text-[14px] whitespace-nowrap">
-                            Subscribe
-                        </Link>
                     </div>
                 </motion.div>
             )}
@@ -139,3 +202,5 @@ export default function Navbar({ theme = 'light' }: NavbarProps) {
         </motion.header>
     )
 }
+
+

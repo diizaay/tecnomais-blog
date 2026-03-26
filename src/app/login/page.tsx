@@ -4,6 +4,7 @@ import { signIn } from 'next-auth/react'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function LoginPage() {
     const [email, setEmail] = useState('')
@@ -33,10 +34,17 @@ export default function LoginPage() {
         <div className="min-h-screen bg-[#f5f5f7] flex items-center justify-center p-6">
             <div className="apple-card max-w-md w-full p-10 bg-white">
                 <div className="text-center mb-8">
-                    <Link href="/" className="font-bold text-[24px] tracking-tight inline-block mb-2">
-                        Tech<span className="text-[#0066cc]">Blog</span> Admin
+                    <Link href="/" className="inline-block mb-6">
+                        <Image 
+                            src="/tecno.png" 
+                            alt="TecnoMais" 
+                            width={200} 
+                            height={60} 
+                            className="h-14 w-auto object-contain mx-auto"
+                            priority
+                        />
                     </Link>
-                    <p className="text-[15px] text-[#86868b]">Secured Dashboard Access</p>
+                    <p className="text-[15px] font-medium text-[#86868b] uppercase tracking-widest">Dashboard Access</p>
                 </div>
 
                 {error && (

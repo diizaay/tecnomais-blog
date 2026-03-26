@@ -41,7 +41,7 @@ export async function POST(req: Request) {
             slug: data.slug,
             excerpt: data.excerpt,
             content: data.content,
-            author: data.author || 'Admin',
+            authorId: data.authorId ? new ObjectId(data.authorId) : null,
             featuredImage: data.featuredImage || null,
             categoryIds: categoryIds,
             tagIds: tagIds,
@@ -54,6 +54,22 @@ export async function POST(req: Request) {
         
         // Update tags and categories to include this article ID (non-transactional)
         const articleId = result.insertedId
+        
+        // Trigger social media sharing (async, but we await to ensure it starts)
+        // We use a try-catch to prevent sharing failures from breaking the article creation
+        try {
+            const { socialMediaAgent } = require('@/lib/agents/social-media')
+            socialMediaAgent.shareArticle({
+                id: articleId.toString(),
+                title: data.title,
+                slug: data.slug,
+                excerpt: data.excerpt,
+                featuredImage: data.featuredImage
+            }).catch((err: any) => console.error('[SocialMediaAgent] Background share failed:', err))
+        } catch (agentError) {
+            console.error('[SocialMediaAgent] Failed to initialize agent:', agentError)
+        }
+
         if (tagIds.length > 0) {
             await db.collection('Tag').updateMany(
                 { _id: { $in: tagIds } },

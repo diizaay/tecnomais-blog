@@ -5,6 +5,7 @@ export const dynamic = 'force-dynamic'
 
 export default async function NewArticlePage() {
     const categories = await prisma.category.findMany()
+    const authors = await (prisma as any).author.findMany()
 
     return (
         <div>
@@ -13,7 +14,7 @@ export default async function NewArticlePage() {
                     Create New Article
                 </h1>
             </div>
-            <ArticleForm categories={categories} />
+            <ArticleForm categories={categories} authors={authors} />
         </div>
     )
 }

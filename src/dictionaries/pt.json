@@ -1,0 +1,117 @@
+{
+  "navigation": {
+    "home": "Início",
+    "categories": "Categorias",
+    "about": "Sobre Nós",
+    "contact": "Contacto",
+    "newsletter": "Newsletter"
+  },
+  "buttons": {
+    "readMore": "Ler Mais",
+    "search": "Pesquisar",
+    "subscribe": "Subscrever",
+    "admin": "Painel",
+    "translate": "Traduzir"
+  },
+  "homepage": {
+    "featured": "Destaque",
+    "latest": "Artigos Recentes",
+    "trending": "Tendências",
+    "related": "Artigos Relacionados",
+    "by": "por"
+  },
+  "article": {
+    "author": "Autor",
+    "published": "Publicado em",
+    "share": "Partilhar este artigo",
+    "notFound": "Artigo Não Encontrado",
+    "backHome": "Voltar para o Início",
+    "readTime": "min de leitura",
+    "related": "Artigos Relacionados"
+  },
+  "footer": {
+    "description": "Blog premium de tecnologia e estilo de vida.",
+    "links": "Links Rápidos",
+    "follow": "Siga-nos",
+    "copyright": "Todos os direitos reservados",
+    "privacy": "Política de Privacidade",
+    "terms": "Termos de Serviço",
+    "cookies": "Política de Cookies",
+    "newsletter": "Subscrever"
+  },
+  "about": {
+    "mission": "Nossa Missão",
+    "futureTitle": "O futuro da tecnologia, explicado.",
+    "description": "TecnoMais é a principal plataforma de Angola para insights profundos sobre inteligência artificial, software de produtividade e o cenário digital em evolução.",
+    "meetExperts": "Conheça Nossos Especialistas",
+    "expertsDescription": "O TecnoMais é impulsionado por uma equipa dedicada de especialistas que trazem diversas perspetivas das linhas da frente da tecnologia global.",
+    "whyWeLead": "Por Que Lideramos",
+    "curationTitle": "Curadoria sobre o Ruído",
+    "curationDesc": "Filtramos o fluxo interminável de notícias tecnológicas para entregar apenas o que realmente importa para a sua carreira e negócios.",
+    "analysisTitle": "Análise Profunda",
+    "analysisDesc": "Não apenas relatamos o que aconteceu; explicamos por que importa e como afeta o futuro.",
+    "inclusionTitle": "Inclusão Digital",
+    "inclusionDesc": "Avançando a conversa digital em Angola e além, tornando tópicos complexos acessíveis a todos."
+  },
+  "contact": {
+    "title": "Entre em Contacto",
+    "subtitle": "Tem uma pergunta ou sugestão? Gostaríamos de ouvi-lo.",
+    "name": "Nome",
+    "email": "Email",
+    "subject": "Assunto",
+    "message": "Mensagem",
+    "send": "Enviar Mensagem",
+    "sending": "A enviar...",
+    "success": "Mensagem enviada com sucesso!",
+    "error": "Ocorreu um erro ao enviar a mensagem."
+  },
+  "author": {
+    "notFound": "Autor Não Encontrado",
+    "notFoundDesc": "Não encontramos um perfil para",
+    "latestFrom": "O Mais Recente de",
+    "articles": "Artigos",
+    "noArticles": "Nenhum artigo descoberto ainda deste autor.",
+    "discoverOther": "Descubra outras histórias",
+    "contactText": "Você pode entrar em contacto ou verificar comunicações de",
+    "emailText": "enviando um email para"
+  },
+  "newsletter_page": {
+    "title": "Fique à Frente",
+    "subtitle": "Junte-se a mais de 50.000 profissionais de tecnologia recebendo o nosso briefing semanal sobre IA, produtividade e o futuro da tecnologia.",
+    "subscribeTitle": "Subscrever o TecnoMais",
+    "checkInbox": "Verifique a sua caixa de entrada!",
+    "confirmationSent": "Enviámos um link de confirmação para",
+    "placeholder": "Introduza o seu email",
+    "button": "Subscrever Agora",
+    "subscribing": "A subscrever...",
+    "agreement": "Ao subscrever, concorda com a nossa",
+    "privacyPolicy": "Política de Privacidade",
+    "noSpam": "Sem spam, nunca.",
+    "feature1Title": "Insights Semanais",
+    "feature1Desc": "Mergulhos profundos curados nas histórias tecnológicas mais importantes.",
+    "feature2Title": "Acesso Antecipado",
+    "feature2Desc": "Seja o primeiro a saber sobre novas ferramentas e relatórios exclusivos.",
+    "feature3Title": "Curadoria Especializada",
+    "feature3Desc": "Sem ruído. Apenas informações de alto sinal para a sua carreira."
+  },
+  "legal": {
+    "cookieTitle": "Política de Cookies",
+    "privacyTitle": "Política de Privacidade",
+    "termsTitle": "Termos de Serviço",
+    "lastUpdated": "Última atualização em",
+    "compliance": "Conformidade",
+    "legalCenter": "Centro Jurídico",
+    "legalRepo": "Repositório Legal",
+    "transparency": "Transparência no modo como lidamos com os seus dados.",
+    "privacyCritical": "A sua privacidade é crítica para nós no TecnoMais.",
+    "readCarefully": "Por favor, leia estes termos cuidadosamente.",
+    "questionsCookies": "Dúvidas sobre Cookies?",
+    "questionsPrivacy": "Precisa de mais esclarecimentos?",
+    "cookieOfficer": "Se desejar mais informações sobre o nosso uso de cookies, por favor contacte o nosso encarregado de privacidade em",
+    "privacyOfficer": "Se tiver alguma dúvida sobre a nossa Política de Privacidade, por favor contacte a nossa equipa jurídica em",
+    "privacyCenter": "Centro de Privacidade",
+    "contactLegal": "Contactar Jurídico",
+    "inThisDocument": "Neste documento",
+    "notBinding": "Nota: Este resumo é fornecido para conveniência e não é legalmente vinculativo."
+  }
+}

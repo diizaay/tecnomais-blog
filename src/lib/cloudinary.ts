@@ -62,7 +62,7 @@ export const getOptimizedImageUrl = (
     aspectRatio,
   } = options || {};
 
-  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || 'djap3064v';
+  const cloudName = (process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || 'djap3064v').trim();
 
   if (!publicId) {
     console.warn('publicId não fornecido para getOptimizedImageUrl');
@@ -101,7 +101,7 @@ export const getOptimizedImageUrl = (
  * URLs otimizadas para thumbnail (reduz agressivamente)
  */
 export const getThumbnailUrl = (publicId: string): string => {
-  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || 'djap3064v';
+  const cloudName = (process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || 'djap3064v').trim();
   
   if (!publicId) return '';
 
@@ -126,7 +126,7 @@ export const getThumbnailUrl = (publicId: string): string => {
  * URLs otimizadas para hero/featured images
  */
 export const getHeroImageUrl = (publicId: string): string => {
-  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || 'djap3064v';
+  const cloudName = (process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || 'djap3064v').trim();
   
   if (!publicId) return '';
 
@@ -136,12 +136,29 @@ export const getHeroImageUrl = (publicId: string): string => {
   const transformations = [
     'q_auto:best',         // Melhor qualidade automática
     'f_auto',              // Formato automático
-    'w_1920',              // Largura para hero
-    'h_1080',              // Altura para hero
+    'w_1600',              // Reduzido de 1920 para 1600 para melhor performance
     'c_fill',
     'g_auto',
     'fl_progressive',
     'fl_strip_profile',    // Remove EXIF
+  ];
+
+  return `https://res.cloudinary.com/${cloudName}/image/upload/${transformations.join(',')}/${cleanPublicId}.jpg`;
+};
+
+/**
+ * Gera uma URL de placeholder borrada (LQIP)
+ */
+export const getBlurPlaceholderUrl = (publicId: string): string => {
+  const cloudName = (process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || 'djap3064v').trim();
+  if (!publicId) return '';
+
+  const cleanPublicId = publicId.split('.')[0];
+  const transformations = [
+    'w_40',               // Extremamente pequeno
+    'e_blur:2000',        // Muito borrado
+    'q_auto:low',         // Qualidade mínima
+    'f_auto',
   ];
 
   return `https://res.cloudinary.com/${cloudName}/image/upload/${transformations.join(',')}/${cleanPublicId}.jpg`;

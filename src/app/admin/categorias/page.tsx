@@ -38,7 +38,7 @@ export default async function AdminCategoriesList() {
                                 </td>
                                 <td className="py-4 px-6 text-right">
                                     <div className="flex items-center justify-end space-x-3">
-                                        <Link href={`/categoria/${category.slug}`} target="_blank" className="text-blue-600 hover:text-blue-800 text-[13px] font-medium">View</Link>
+                                        <Link href={`/category/${category.slug}`} target="_blank" className="text-blue-600 hover:text-blue-800 text-[13px] font-medium">View</Link>
                                         <Link href={`/admin/categorias/${category.id}/editar`} className="text-gray-500 hover:text-gray-800 text-[13px] font-medium">Edit</Link>
                                         <DeleteCategoryButton id={category.id} />
                                     </div>

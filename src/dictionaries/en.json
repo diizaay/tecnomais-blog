@@ -1,0 +1,117 @@
+{
+  "navigation": {
+    "home": "Home",
+    "categories": "Categories",
+    "about": "About Us",
+    "contact": "Contact",
+    "newsletter": "Newsletter"
+  },
+  "buttons": {
+    "readMore": "Read More",
+    "search": "Search",
+    "subscribe": "Subscribe",
+    "admin": "Admin",
+    "translate": "Translate"
+  },
+  "homepage": {
+    "featured": "Featured Story",
+    "latest": "Latest Articles",
+    "trending": "Trending Now",
+    "related": "Related Articles",
+    "by": "by"
+  },
+  "article": {
+    "author": "Author",
+    "published": "Published on",
+    "share": "Share this article",
+    "notFound": "Article Not Found",
+    "backHome": "Back to Homepage",
+    "readTime": "min read",
+    "related": "Related Reading"
+  },
+  "footer": {
+    "description": "Premium technology and lifestyle blog.",
+    "links": "Quick Links",
+    "follow": "Follow Us",
+    "copyright": "All rights reserved",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "cookies": "Cookie Policy",
+    "newsletter": "Subscribe"
+  },
+  "about": {
+    "mission": "Our Mission",
+    "futureTitle": "The future of tech, explained.",
+    "description": "TecnoMais is Angola's premier platform for deep insights into artificial intelligence, productivity software, and the evolving digital landscape.",
+    "meetExperts": "Meet Our Experts",
+    "expertsDescription": "TecnoMais is powered by a dedicated team of specialists who bring diverse perspectives from the front lines of global technology.",
+    "whyWeLead": "Why We Lead",
+    "curationTitle": "Curation over Noise",
+    "curationDesc": "We filter the endless stream of tech news to deliver only what truly matters to your career and business.",
+    "analysisTitle": "In-depth Analysis",
+    "analysisDesc": "We don't just report what happened; we explain why it matters and how it affects the future.",
+    "inclusionTitle": "Digital Inclusion",
+    "inclusionDesc": "Advancing the digital conversation in Angola and beyond, making complex topics accessible to everyone."
+  },
+  "contact": {
+    "title": "Get in Touch",
+    "subtitle": "Have a question or suggestion? We'd love to hear from you.",
+    "name": "Name",
+    "email": "Email",
+    "subject": "Subject",
+    "message": "Message",
+    "send": "Send Message",
+    "sending": "Sending...",
+    "success": "Message sent successfully!",
+    "error": "An error occurred while sending the message."
+  },
+  "author": {
+    "notFound": "Author Not Found",
+    "notFoundDesc": "We couldn't find a profile for",
+    "latestFrom": "Latest from",
+    "articles": "Articles",
+    "noArticles": "No articles discovered yet from this author.",
+    "discoverOther": "Discover other stories",
+    "contactText": "You can contact or verify outreach from",
+    "emailText": "by emailing"
+  },
+  "newsletter_page": {
+    "title": "Stay Ahead",
+    "subtitle": "Join 50,000+ tech professionals getting our weekly briefing on AI, productivity, and the future of technology.",
+    "subscribeTitle": "Subscribe to TecnoMais",
+    "checkInbox": "Check your inbox!",
+    "confirmationSent": "We've sent a confirmation link to",
+    "placeholder": "Enter your email",
+    "button": "Subscribe Now",
+    "subscribing": "Subscribing...",
+    "agreement": "By subscribing, you agree to our",
+    "privacyPolicy": "Privacy Policy",
+    "noSpam": "No spam, ever.",
+    "feature1Title": "Weekly Insights",
+    "feature1Desc": "Curated deep dives into the most important tech stories.",
+    "feature2Title": "Early Access",
+    "feature2Desc": "Be the first to know about new tools and exclusive reports.",
+    "feature3Title": "Expert Curation",
+    "feature3Desc": "No noise. Just high-signal information for your career."
+  },
+  "legal": {
+    "cookieTitle": "Cookie Policy",
+    "privacyTitle": "Privacy Policy",
+    "termsTitle": "Terms of Service",
+    "lastUpdated": "Last updated on",
+    "compliance": "Compliance",
+    "legalCenter": "Legal Center",
+    "legalRepo": "Legal Repository",
+    "transparency": "Transparency in how we handle your data.",
+    "privacyCritical": "Your privacy is critical to us at TecnoMais.",
+    "readCarefully": "Please read these terms carefully.",
+    "questionsCookies": "Questions about Cookies?",
+    "questionsPrivacy": "Need more clarification?",
+    "cookieOfficer": "If you would like more information on our cookie usage, please contact our privacy officer at",
+    "privacyOfficer": "If you have any questions about our Privacy Policy, please contact our legal team at",
+    "privacyCenter": "Privacy Center",
+    "contactLegal": "Contact Legal",
+    "inThisDocument": "In this document",
+    "notBinding": "Note: This summary is provided for convenience and is not legally binding."
+  }
+}

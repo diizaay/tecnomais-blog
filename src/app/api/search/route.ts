@@ -20,15 +20,15 @@ export async function GET(request: NextRequest) {
         // Dynamic import to avoid top-level Prisma instantiation during build
         const { default: prisma } = await import('@/lib/prisma')
 
-        const articles = await prisma.article.findMany({
+        const articles = await (prisma as any).article.findMany({
             where: {
                 OR: [
                     { title: { contains: query, mode: 'insensitive' } },
                     { excerpt: { contains: query, mode: 'insensitive' } },
                     { content: { contains: query, mode: 'insensitive' } },
-                    { author: { contains: query, mode: 'insensitive' } }
+                    { author: { name: { contains: query, mode: 'insensitive' } } }
                 ]
-            },
+            } as any,
             take: 8,
             orderBy: {
                 publishedDate: 'desc'

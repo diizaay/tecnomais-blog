@@ -19,19 +19,23 @@ interface ShareButtonsProps {
     shareUrl: string
     shareTitle: string
     variant?: 'hero' | 'sticky'
+    dict: {
+        share: string
+        copied: string
+    }
 }
 
-export default function ShareButtons({ shareUrl, shareTitle, variant = 'hero' }: ShareButtonsProps) {
+export default function ShareButtons({ shareUrl, shareTitle, variant = 'hero', dict }: ShareButtonsProps) {
     const handleCopy = () => {
         navigator.clipboard.writeText(shareUrl)
-        alert('Link copied to clipboard!')
+        alert(dict.copied)
     }
 
     if (variant === 'sticky') {
         return (
             <div className="sticky top-40 flex flex-col items-center space-y-6">
                 <div className="w-[1px] h-10 bg-gray-200 mb-2"></div>
-                <span className="rotate-90 text-[11px] uppercase tracking-[0.3em] font-bold text-gray-400 mb-8 whitespace-nowrap">Share</span>
+                <span className="rotate-90 text-[11px] uppercase tracking-[0.3em] font-bold text-gray-400 mb-8 whitespace-nowrap">{dict.share}</span>
                 <a 
                     href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`} 
                     target="_blank" 
@@ -74,7 +78,7 @@ export default function ShareButtons({ shareUrl, shareTitle, variant = 'hero' }:
 
     return (
         <div className="flex items-center space-x-6 pt-4 border-t border-white/10">
-            <span className="text-[13px] uppercase tracking-widest text-gray-500 font-bold">Share</span>
+            <span className="text-[13px] uppercase tracking-widest text-gray-500 font-bold">{dict.share}</span>
             <div className="flex space-x-4">
                 <a 
                     href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`} 
@@ -116,3 +120,4 @@ export default function ShareButtons({ shareUrl, shareTitle, variant = 'hero' }:
         </div>
     )
 }
+

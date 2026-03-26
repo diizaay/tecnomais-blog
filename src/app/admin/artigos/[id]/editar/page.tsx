@@ -7,11 +7,12 @@ export const dynamic = 'force-dynamic'
 export default async function EditArticlePage({ params }: { params: { id: string } }) {
     const article = await prisma.article.findUnique({ 
         where: { id: params.id },
-        include: { tags: true } 
+        include: { tags: true, author: true } as any
     })
     if (!article) notFound()
 
     const categories = await prisma.category.findMany()
+    const authors = await (prisma as any).author.findMany()
 
     return (
         <div>
@@ -20,7 +21,7 @@ export default async function EditArticlePage({ params }: { params: { id: string
                     Edit Article
                 </h1>
             </div>
-            <ArticleForm initialData={article} categories={categories} />
+            <ArticleForm initialData={article as any} categories={categories} authors={authors} />
         </div>
     )
 }

@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic'
 export default async function AdminArticlesList() {
     const articles = await prisma.article.findMany({
         orderBy: { publishedDate: 'desc' },
-        include: { categories: true }
+        include: { categories: true, author: true } as any
     })
 
     return (
@@ -27,6 +27,7 @@ export default async function AdminArticlesList() {
                         <tr className="bg-gray-50 border-b border-gray-100">
                             <th className="py-4 px-6 text-[13px] font-semibold text-gray-500 uppercase tracking-wider">Title</th>
                             <th className="py-4 px-6 text-[13px] font-semibold text-gray-500 uppercase tracking-wider">Category</th>
+                            <th className="py-4 px-6 text-[13px] font-semibold text-gray-500 uppercase tracking-wider">Author</th>
                             <th className="py-4 px-6 text-[13px] font-semibold text-gray-500 uppercase tracking-wider">Date</th>
                             <th className="py-4 px-6 text-[13px] font-semibold text-gray-500 uppercase tracking-wider text-right">Actions</th>
                         </tr>
@@ -42,11 +43,14 @@ export default async function AdminArticlesList() {
                                     {(article as any).categories?.map((c: any) => c.name).join(', ') || 'N/A'}
                                 </td>
                                 <td className="py-4 px-6 text-[14px] text-gray-600">
+                                    {(article as any).author?.name || 'Staff'}
+                                </td>
+                                <td className="py-4 px-6 text-[14px] text-gray-600">
                                     {new Date(article.publishedDate).toLocaleDateString()}
                                 </td>
                                 <td className="py-4 px-6 text-right">
                                     <div className="flex items-center justify-end space-x-3">
-                                        <Link href={`/artigo/${article.slug}`} target="_blank" className="text-blue-600 hover:text-blue-800 text-[13px] font-medium">View</Link>
+                                        <Link href={`/article/${article.slug}`} target="_blank" className="text-blue-600 hover:text-blue-800 text-[13px] font-medium">View</Link>
                                         <Link href={`/admin/artigos/${article.id}/editar`} className="text-gray-500 hover:text-gray-800 text-[13px] font-medium">Edit</Link>
                                         <DeleteArticleButton id={article.id} />
                                     </div>

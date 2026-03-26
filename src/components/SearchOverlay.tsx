@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Search, X, ArrowRight, Loader2 } from 'lucide-react'
-import Image from 'next/image'
+import OptimizedCloudinaryImage from './OptimizedCloudinaryImage'
 import Link from 'next/link'
 
 interface SearchOverlayProps {
@@ -107,16 +107,18 @@ export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                                     {results.map((article) => (
                                         <Link 
                                             key={article.id} 
-                                            href={`/artigo/${article.slug}`}
+                                            href={`/article/${article.slug}`}
                                             onClick={onClose}
                                             className="group flex gap-6 items-start border-b border-gray-100 pb-8 last:border-0"
                                         >
                                             <div className="relative w-24 h-24 md:w-32 md:h-32 rounded-2xl overflow-hidden shrink-0 bg-gray-100">
-                                                <Image 
+                                                <OptimizedCloudinaryImage 
                                                     src={article.featuredImage || 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=400'} 
                                                     alt={article.title}
-                                                    fill
-                                                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                                                    width={200}
+                                                    height={200}
+                                                    type="thumbnail"
+                                                    className="object-cover transition-transform duration-500 group-hover:scale-110 w-full h-full"
                                                 />
                                             </div>
                                             <div className="flex-1">

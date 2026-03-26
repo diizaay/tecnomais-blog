@@ -50,7 +50,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
             featuredImage: data.featuredImage || null,
             categoryIds: categoryIds,
             tagIds: tagIds,
-            author: data.author,
+            authorId: data.authorId ? new ObjectId(data.authorId) : null,
             updatedAt: new Date()
         }
 

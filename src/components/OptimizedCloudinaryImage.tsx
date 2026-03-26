@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { extractPublicIdFromUrl, getOptimizedImageUrl, getThumbnailUrl, getHeroImageUrl } from '@/lib/cloudinary';
+import { extractPublicIdFromUrl, getOptimizedImageUrl, getBlurPlaceholderUrl } from '@/lib/cloudinary';
 
 interface OptimizedImageProps {
   src: string;
@@ -9,13 +9,14 @@ interface OptimizedImageProps {
   quality?: 'auto' | 'low' | 'medium' | 'high';
   type?: 'thumbnail' | 'hero' | 'default';
   priority?: boolean;
+  fill?: boolean;
   className?: string;
   sizes?: string;
 }
 
 /**
  * Componente Image otimizado para Cloudinary
- * Reduz automaticamente tamanho de arquivo sem perder qualidade
+ * Implementa Blur Placeholder (LQIP) para melhor performance percebida
  */
 export default function OptimizedCloudinaryImage({
   src,
@@ -25,6 +26,7 @@ export default function OptimizedCloudinaryImage({
   quality = 'auto',
   type = 'default',
   priority = false,
+  fill = false,
   className = '',
   sizes,
 }: OptimizedImageProps) {
@@ -40,138 +42,83 @@ export default function OptimizedCloudinaryImage({
         priority={priority}
         className={className}
         sizes={sizes}
-        loading={priority ? 'eager' : 'lazy'}
         quality={90}
-      />
-    );
-  }
-
-  // Se for URL Cloudinary DEMO (ex: .../image/upload/w_1200,h_800,c_fill/1), usar a mesma URL para thumbnail
-  if (src.startsWith('http') && src.includes('res.cloudinary.com/demo/image/upload/') && /\/\d+$/.test(src)) {
-    return (
-      <Image
-        src={src}
-        alt={alt}
-        width={width}
-        height={height}
-        priority={priority}
-        className={className}
-        sizes={sizes}
-        loading={priority ? 'eager' : 'lazy'}
-        quality={90}
-        unoptimized={true}
-      />
-    );
-  }
-
-  // Se for URL externa (Unsplash, etc), não tenta otimizar
-  if (src.startsWith('http') && !src.includes('res.cloudinary.com')) {
-    return (
-      <Image
-        src={src}
-        alt={alt}
-        width={width}
-        height={height}
-        priority={priority}
-        className={className}
-        sizes={sizes}
-        loading={priority ? 'eager' : 'lazy'}
-        quality={90}
-        unoptimized={true}
       />
     );
   }
 
   // Verifica se é URL Cloudinary
-  let publicId = '';
-  let optimizedUrl = '';
-  
-  if (src.includes('res.cloudinary.com')) {
-    // Extrai o public ID de uma URL Cloudinary completa
-    publicId = extractPublicIdFromUrl(src);
-  } else {
-    // Trata como public ID direto
-    publicId = src;
+  const publicId = extractPublicIdFromUrl(src);
+  const isCloudinary = !!publicId && (src.includes('res.cloudinary.com') || !src.startsWith('http'));
+
+  if (!isCloudinary) {
+    return (
+      <Image
+        src={src}
+        alt={alt}
+        width={width}
+        height={height}
+        priority={priority}
+        className={className}
+        sizes={sizes}
+        unoptimized={true}
+      />
+    );
   }
 
-  // Escolher URL otimizada baseado no tipo
+  // Escolher URL otimizada e placeholder
+  let optimizedUrl = '';
+  let blurDataURL = '';
+
   if (type === 'thumbnail') {
-    // Se for Cloudinary demo, use a URL original sem transformação
-    if (src.startsWith('http') && src.includes('res.cloudinary.com/demo/image/upload/') && /\/\d+$/.test(src)) {
-      optimizedUrl = src;
-    } else {
-      optimizedUrl = getOptimizedImageUrl(publicId, {
-        width: width || 500,
-        height: height || 300,
-        quality: 'low',  // Mais agressivo para thumbnails
-        format: 'auto',
-      });
-    }
+    optimizedUrl = getOptimizedImageUrl(publicId, {
+      width: width || 600,
+      height: height || 400,
+      quality: 'low',
+    });
   } else if (type === 'hero') {
-    // Para hero, mantém as dimensões padrão
-    optimizedUrl = getHeroImageUrl(publicId);
+    // getHeroImageUrl agora usa 1600px para melhor equilíbrio entre qualidade e peso
+    const transformations = [
+        'q_auto:best',
+        'f_auto',
+        'w_1600',
+        'h_900',
+        'c_fill',
+        'g_auto',
+        'fl_progressive'
+    ];
+    optimizedUrl = `https://res.cloudinary.com/${(process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || 'djap3064v').trim()}/image/upload/${transformations.join(',')}/${publicId}.jpg`;
   } else {
     optimizedUrl = getOptimizedImageUrl(publicId, {
       width,
       height,
       quality,
-      format: 'auto',
     });
   }
 
-  // Fallback se não conseguir processar
-  if (!optimizedUrl || !optimizedUrl.startsWith('http')) {
-    // Se ainda assim não temos uma URL válida, trata como public ID
-    const fallbackUrl = getOptimizedImageUrl(publicId || src, {
-      width,
-      height,
-      quality,
-      format: 'auto',
-    });
-    
-    if (!fallbackUrl || !fallbackUrl.startsWith('http')) {
-      // Last resort - return com fallback simples
-      return (
-        <Image
-          src={src}
-          alt={alt}
-          width={width}
-          height={height}
-          priority={priority}
-          className={className}
-          sizes={sizes}
-          loading={priority ? 'eager' : 'lazy'}
-          quality={90}
-          unoptimized={true}
-        />
-      );
-    }
-    
-    optimizedUrl = fallbackUrl;
-  }
+  blurDataURL = getBlurPlaceholderUrl(publicId);
 
-  // Sizes responsivos padrão
+  // Sizes responsivos padrão melhorados
   const defaultSizes =
     type === 'hero'
-      ? '(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 100vw'
+      ? '100vw'
       : type === 'thumbnail'
-        ? '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
-        : '(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 1200px';
+        ? '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+        : '(max-width: 1200px) 100vw, 1200px';
 
-  // Se for Cloudinary, não reotimizar
-  const isCloudinary = optimizedUrl.includes('res.cloudinary.com');
   return (
     <Image
       src={optimizedUrl}
       alt={alt}
-      width={width}
-      height={height}
+      width={fill ? undefined : width}
+      height={fill ? undefined : height}
+      fill={fill}
       priority={priority}
       className={className}
       sizes={sizes || defaultSizes}
-      loading={priority ? 'eager' : 'lazy'}
-      quality={90}
-      unoptimized={isCloudinary}
+      placeholder="blur"
+      blurDataURL={blurDataURL}
+      quality={95}
     />
   );
 }
