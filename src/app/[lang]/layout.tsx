@@ -32,6 +32,7 @@ export default async function LocaleLayout({
       <head>
         <meta name="monetag" content="00a11238016e2c715d356847ba63be4e" />
         <script src="https://quge5.com/88/tag.min.js" data-zone="223401" async data-cfasync="false"></script>
+        <script src="https://pl28983912.profitablecpmratenetwork.com/89/39/90/893990f37227b69bb6dac5c01b525552.js" async></script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://res.cloudinary.com" />
