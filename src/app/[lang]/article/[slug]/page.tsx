@@ -225,7 +225,7 @@ export default async function ArticlePage({ params: { slug, lang } }: { params: 
                                 <div className="flex items-center space-x-4">
                                     <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-[#0066cc] flex-shrink-0">
                                         <OptimizedCloudinaryImage 
-                                            src={(article as any).author?.avatar || '/tecno.png'}
+                                            src={(article as any).author?.avatar || '/authors/admin.png'}
                                             alt={(article as any).author?.name || 'Author'}
                                             width={48}
                                             height={48}
@@ -320,7 +320,7 @@ export default async function ArticlePage({ params: { slug, lang } }: { params: 
                                     <div className="mt-16 p-8 bg-[#f5f5f7] rounded-[32px] border border-gray-100 flex flex-col md:flex-row gap-8 items-center md:items-start transition-all hover:shadow-xl hover:shadow-[#0066cc]/5">
                                         <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-lg flex-shrink-0">
                                             <OptimizedCloudinaryImage 
-                                                src={(article as any).author.avatar || '/tecno.png'}
+                                                src={(article as any).author.avatar || '/authors/admin.png'}
                                                 alt={(article as any).author.name}
                                                 width={96}
                                                 height={96}

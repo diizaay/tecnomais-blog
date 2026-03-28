@@ -95,7 +95,7 @@ export default async function AuthorPage({ params: { lang, name } }: { params: {
         name: author.name,
         bio: author.bio || (lang === 'pt' ? `${author.name} cobre tendências tecnológicas e inovação para o TecnoMais.` : `${author.name} covers technology trends and innovation for TecnoMais.`),
         email: `${author.name.toLowerCase().replace(/\s+/g, '.')}@tecnomais.online`,
-        avatar: author.avatar || 'https://res.cloudinary.com/djap3064v/image/upload/v1773819142/Sem_T%C3%ADtulo_off5ej.png',
+        avatar: author.avatar || '/authors/admin.png',
         socials: [
             { name: 'X', url: '#' }
         ]
