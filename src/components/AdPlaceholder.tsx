@@ -73,7 +73,7 @@ export default function AdPlaceholder({ format = '300x250' }: AdPlaceholderProps
                                     'width' : ${config.width},
                                     'params' : {}
                                 };
-                                document.write('<scr' + 'ipt type="text/javascript" src="/api/adsterra-proxy/${config.key}/invoke.js"></scr' + 'ipt>');
+                                document.write('<scr' + 'ipt type="text/javascript" src="/ads-proxy/adsterra/${config.key}/invoke.js"></scr' + 'ipt>');
                             </script>
                         </div>
                     </body>

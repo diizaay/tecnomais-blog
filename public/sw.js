@@ -11,7 +11,7 @@ self.addEventListener('fetch', function(event) {
         'adsterratechnology.com': '/ads-proxy/adsterra-tech',
         'rtmark.net': '/ads-proxy/adsterra-rtm',
         'my.rtmark.net': '/ads-proxy/adsterra-myrtm',
-        'highperformanceformat.com': '/api/adsterra-proxy',
+        'highperformanceformat.com': '/ads-proxy/adsterra',
         'adsterratools.com': '/ads-proxy/adsterra-static',
         'onclickads.net': '/ads-proxy/adsterra-click'
     };
