@@ -45,9 +45,11 @@ const { chromium } = require('playwright');
     const framesCount = page.frames().length;
     console.log('Total Frames found:', framesCount);
 
-    const adContainers = await page.$$eval('.ad-container', containers => {
+    // Look for both old and new (ofuscated) container selectors
+    const adContainers = await page.$$eval('._info_v2_, .promotion-info-wrapper, .ad-placeholder, .ad-container', (containers) => {
         return containers.map(c => ({
-            id: c.getAttribute('id'),
+            id: c.getAttribute('id') || 'no-id',
+            className: c.getAttribute('class'),
             innerHTML: c.innerHTML.trim().substring(0, 100) + '...',
             hasIframe: c.querySelector('iframe') !== null
         }));
