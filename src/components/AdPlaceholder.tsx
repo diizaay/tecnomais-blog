@@ -26,24 +26,39 @@ export default function AdPlaceholder({ format = '300x250' }: AdPlaceholderProps
         const container = containerRef.current;
         scriptLoadedRef.current = true;
         
-        // Generate a stable unique ID for this instance based on format
-        const uniqueId = `ad-${format}-${Math.random().toString(36).substring(2, 9)}`;
+        // Setup unique ID
+        const uniqueId = `ad-slot-${format}-${Math.random().toString(36).substring(2, 9)}`;
         container.id = uniqueId;
 
-        if (format === 'native') {
-            const script = document.createElement('script');
-            script.async = true;
-            script.dataset.cfasync = 'false';
-            script.src = 'https://pl28985299.profitablecpmratenetwork.com/5b95a5dd0ddbde1c299fda173e0428f2/invoke.js';
-            container.appendChild(script);
+        // Create the isolation iframe
+        const frame = document.createElement('iframe');
+        frame.style.width = '100%';
+        frame.style.height = '100%';
+        frame.style.border = 'none';
+        frame.style.overflow = 'hidden';
+        frame.setAttribute('scrolling', 'no');
+        frame.setAttribute('frameborder', '0');
+        
+        container.appendChild(frame);
 
-            const div = document.createElement('div');
-            div.id = 'container-5b95a5dd0ddbde1c299fda173e0428f2';
-            container.appendChild(div);
+        const frameDoc = frame.contentDocument || frame.contentWindow?.document;
+        if (!frameDoc) return;
+
+        if (format === 'native') {
+            frameDoc.open();
+            frameDoc.write(`
+                <html>
+                    <body style="margin:0;padding:0;overflow:hidden;">
+                        <script async data-cfasync="false" src="https://pl28985299.profitablecpmratenetwork.com/5b95a5dd0ddbde1c299fda173e0428f2/invoke.js"></script>
+                        <div id="container-5b95a5dd0ddbde1c299fda173e0428f2"></div>
+                    </body>
+                </html>
+            `);
+            frameDoc.close();
             return;
         }
 
-        // Standard Banner formats
+        // Standard Banners
         const configMap = {
             '160x300': { key: '5ac183ef3bfadd4ae406dc3be1bb6909', width: 160, height: 300 },
             '320x50': { key: '15c1ab0412e2ef634b63d8cc4697344e', width: 320, height: 50 },
@@ -52,30 +67,26 @@ export default function AdPlaceholder({ format = '300x250' }: AdPlaceholderProps
 
         const config = configMap[format as keyof typeof configMap] || configMap['300x250'];
 
-        // We wrap the configuration and script loading to isolate it as much as possible
-        // and avoid global atOptions collisions in some cases
-        const scriptWrapper = document.createElement('div');
-        scriptWrapper.className = 'ad-script-wrapper';
-        
-        const optionsScript = document.createElement('script');
-        optionsScript.type = 'text/javascript';
-        optionsScript.innerHTML = `
-            atOptions = {
-                'key' : '${config.key}',
-                'format' : 'iframe',
-                'height' : ${config.height},
-                'width' : ${config.width},
-                'params' : {}
-            };
-        `;
-        scriptWrapper.appendChild(optionsScript);
-
-        const invokeScript = document.createElement('script');
-        invokeScript.type = 'text/javascript';
-        invokeScript.src = `https://www.highperformanceformat.com/${config.key}/invoke.js`;
-        scriptWrapper.appendChild(invokeScript);
-        
-        container.appendChild(scriptWrapper);
+        frameDoc.open();
+        frameDoc.write(`
+            <html>
+                <body style="margin:0;padding:0;overflow:hidden;display:flex;justify-content:center;align-items:center;min-height:100vh;">
+                    <div id="ad-target">
+                        <script type="text/javascript">
+                            atOptions = {
+                                'key' : '${config.key}',
+                                'format' : 'iframe',
+                                'height' : ${config.height},
+                                'width' : ${config.width},
+                                'params' : {}
+                            };
+                            document.write('<scr' + 'ipt type="text/javascript" src="https://www.highperformanceformat.com/${config.key}/invoke.js"></scr' + 'ipt>');
+                        </script>
+                    </div>
+                </body>
+            </html>
+        `);
+        frameDoc.close();
 
     }, [format, AD_ACTIVE]);
 
