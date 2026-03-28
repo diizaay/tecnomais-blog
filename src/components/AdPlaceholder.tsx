@@ -98,10 +98,10 @@ export default function AdPlaceholder({ format = '300x250' }: AdPlaceholderProps
 
     return (
         <div className="w-full flex flex-col items-center my-8">
-            <span className="text-[10px] text-gray-400 uppercase tracking-widest mb-2 font-medium opacity-50">Patrocinado</span>
+            <span className="text-[10px] text-gray-400 uppercase tracking-widest mb-2 font-medium">Advertisement</span>
             <div 
                 ref={containerRef}
-                className={`bg-[#f9f9fb] border border-gray-100 rounded-lg overflow-hidden flex items-center justify-center transition-all ${getSlotSizeClass()} _info_v2_`}
+                className={`overflow-hidden flex items-center justify-center transition-all ${getSlotSizeClass()} _info_v2_`}
                 style={{ 
                     maxWidth: format === '300x250' ? '300px' : format === '160x300' ? '160px' : '100%'
                 }}

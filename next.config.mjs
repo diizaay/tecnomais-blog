@@ -136,5 +136,5 @@ const nextConfig = {
     },
 };
 
-// Force redeploy and cache invalidation: 2026-03-28T15:36:00Z
+// Force redeploy and cache invalidation: 2026-03-28T16:42:00Z
 export default nextConfig;
