@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import ProgressBar from "@/components/ProgressBar";
 import { getDictionary, Locale } from "@/lib/get-dictionary";
 import "../globals.css";
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 const inter = Inter({
   subsets: ["latin"],
@@ -50,6 +51,7 @@ export default async function LocaleLayout({
         <Footer lang={lang} dict={dict} />
         <Analytics />
         <SpeedInsights />
+        <GoogleAnalytics gaId="G-XL1PMB2THP" />
       </body>
     </html>
   );
