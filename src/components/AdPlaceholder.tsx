@@ -10,14 +10,6 @@ export default function AdPlaceholder({ format = '300x250' }: AdPlaceholderProps
     const containerRef = useRef<HTMLDivElement>(null);
     const scriptLoadedRef = useRef(false);
 
-    // Configurable dimensions based on format
-    const dimensions = {
-        '300x250': 'w-[300px] h-[250px]',
-        '160x300': 'w-[160px] h-[300px]',
-        '320x50': 'w-[320px] h-[50px]',
-        'native': 'w-full min-h-[100px]'
-    }
-
     const AD_ACTIVE = true
 
     useEffect(() => {
@@ -26,9 +18,13 @@ export default function AdPlaceholder({ format = '300x250' }: AdPlaceholderProps
         const container = containerRef.current;
         scriptLoadedRef.current = true;
         
-        // Setup unique ID
+        // Ensure the container is clean before appending
+        const target = container.querySelector('._rn_target_') || container;
+        target.innerHTML = '';
+
+        // Setup unique ID for tracking
         const uniqueId = `ad-slot-${format}-${Math.random().toString(36).substring(2, 9)}`;
-        container.id = uniqueId;
+        container.setAttribute('data-id', uniqueId);
 
         // Create the isolation iframe
         const frame = document.createElement('iframe');
@@ -39,7 +35,7 @@ export default function AdPlaceholder({ format = '300x250' }: AdPlaceholderProps
         frame.setAttribute('scrolling', 'no');
         frame.setAttribute('frameborder', '0');
         
-        container.appendChild(frame);
+        target.appendChild(frame);
 
         const frameDoc = frame.contentDocument || frame.contentWindow?.document;
         if (!frameDoc) return;
@@ -90,19 +86,30 @@ export default function AdPlaceholder({ format = '300x250' }: AdPlaceholderProps
 
     if (!AD_ACTIVE) return null
 
+    // Helper to get exact CSS classes for size
+    const getSlotSizeClass = () => {
+        switch(format) {
+            case '300x250': return 'w-[300px] h-[250px]';
+            case '160x300': return 'w-[160px] h-[300px]';
+            case '320x50':  return 'w-[320px] h-[50px]';
+            default:        return 'w-full min-h-[100px]';
+        }
+    }
+
     return (
-        <div 
-            ref={containerRef}
-            className={`flex justify-center items-center my-8 overflow-hidden min-h-[50px] transition-all bg-transparent _info_v2_`}
-            style={{ 
-                width: '100%',
-                maxWidth: format === '300x250' ? '300px' : format === '160x300' ? '160px' : '100%'
-            }}
-        >
-            {/* 
-                This is a generic content slot for dynamic assets.
-                Using obfuscated identifiers to ensure reliable delivery behind restricted networks.
-            */}
+        <div className="w-full flex flex-col items-center my-8">
+            <span className="text-[10px] text-gray-400 uppercase tracking-widest mb-2 font-medium opacity-50">Patrocinado</span>
+            <div 
+                ref={containerRef}
+                className={`bg-[#f9f9fb] border border-gray-100 rounded-lg overflow-hidden flex items-center justify-center transition-all ${getSlotSizeClass()} _info_v2_`}
+                style={{ 
+                    maxWidth: format === '300x250' ? '300px' : format === '160x300' ? '160px' : '100%'
+                }}
+            >
+                <div className="_rn_target_ w-full h-full flex items-center justify-center">
+                    {/* The ad iframe will be injected here */}
+                </div>
+            </div>
         </div>
     )
 }
