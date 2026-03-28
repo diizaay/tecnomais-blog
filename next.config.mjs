@@ -77,10 +77,6 @@ const nextConfig = {
             destination: 'https://pl28985299.profitablecpmratenetwork.com/:path*',
         },
         {
-            source: '/ads-proxy/monetag-stats/:path*',
-            destination: 'https://protrafficinspector.com/:path*',
-        },
-        {
             source: '/ads-proxy/adsterra-tech/:path*',
             destination: 'https://adsterratechnology.com/:path*',
         },

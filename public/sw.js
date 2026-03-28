@@ -8,15 +8,12 @@ importScripts('https://5gvci.com/act/files/service-worker.min.js?r=sw');
 self.addEventListener('fetch', function(event) {
     const url = new URL(event.request.url);
     const domainMap = {
-        'protrafficinspector.com': '/ads-proxy/monetag-stats',
         'adsterratechnology.com': '/ads-proxy/adsterra-tech',
         'rtmark.net': '/ads-proxy/adsterra-rtm',
         'my.rtmark.net': '/ads-proxy/adsterra-myrtm',
-        'highperformanceformat.com': '/ads-proxy/adsterra',
+        'highperformanceformat.com': '/api/adsterra-proxy',
         'adsterratools.com': '/ads-proxy/adsterra-static',
-        'onclickads.net': '/ads-proxy/adsterra-click',
-        'profitablecpmratenetwork.com': '/ads-proxy/monetag',
-        '5gvci.com': '/ads-proxy/monetag'
+        'onclickads.net': '/ads-proxy/adsterra-click'
     };
 
     const targetDomain = Object.keys(domainMap).find(domain => url.hostname.includes(domain));
