@@ -71,7 +71,7 @@ export default function AdPlaceholder({ format = '300x250' }: AdPlaceholderProps
         frameDoc.write(`
             <html>
                 <body style="margin:0;padding:0;overflow:hidden;display:flex;justify-content:center;align-items:center;min-height:100vh;">
-                    <div id="ad-target">
+                    <div id="content-target">
                         <script type="text/javascript">
                             atOptions = {
                                 'key' : '${config.key}',
