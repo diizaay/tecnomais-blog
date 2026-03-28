@@ -76,6 +76,22 @@ const nextConfig = {
             source: '/ads-proxy/monetag/:path*',
             destination: 'https://pl28985299.profitablecpmratenetwork.com/:path*',
         },
+        {
+            source: '/ads-proxy/monetag-stats/:path*',
+            destination: 'https://protrafficinspector.com/:path*',
+        },
+        {
+            source: '/ads-proxy/adsterra-tech/:path*',
+            destination: 'https://adsterratechnology.com/:path*',
+        },
+        {
+            source: '/ads-proxy/adsterra-rtm/:path*',
+            destination: 'https://rtmark.net/:path*',
+        },
+        {
+            source: '/ads-proxy/adsterra-myrtm/:path*',
+            destination: 'https://my.rtmark.net/:path*',
+        },
     ],
     headers: async () => [
         {
@@ -124,5 +140,5 @@ const nextConfig = {
     },
 };
 
-// Force redeploy and cache invalidation: 2026-03-28T14:23:00Z
+// Force redeploy and cache invalidation: 2026-03-28T14:26:00Z
 export default nextConfig;
