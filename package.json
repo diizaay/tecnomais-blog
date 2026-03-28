@@ -12,6 +12,7 @@
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.8.2",
     "@next/third-parties": "^16.2.1",
+    "@playwright/test": "^1.58.2",
     "@prisma/client": "5.10.x",
     "@types/bcryptjs": "^2.4.6",
     "@vercel/analytics": "^2.0.1",

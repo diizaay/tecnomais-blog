@@ -25,6 +25,10 @@ export default function AdPlaceholder({ format = '300x250' }: AdPlaceholderProps
 
         const container = containerRef.current;
         scriptLoadedRef.current = true;
+        
+        // Generate a stable unique ID for this instance based on format
+        const uniqueId = `ad-${format}-${Math.random().toString(36).substring(2, 9)}`;
+        container.id = uniqueId;
 
         if (format === 'native') {
             const script = document.createElement('script');
@@ -48,8 +52,11 @@ export default function AdPlaceholder({ format = '300x250' }: AdPlaceholderProps
 
         const config = configMap[format as keyof typeof configMap] || configMap['300x250'];
 
-        // We use a small timeout to ensure atOptions is seen by the script
-        // and avoid race conditions with multiple ads on the same page
+        // We wrap the configuration and script loading to isolate it as much as possible
+        // and avoid global atOptions collisions in some cases
+        const scriptWrapper = document.createElement('div');
+        scriptWrapper.className = 'ad-script-wrapper';
+        
         const optionsScript = document.createElement('script');
         optionsScript.type = 'text/javascript';
         optionsScript.innerHTML = `
@@ -61,12 +68,14 @@ export default function AdPlaceholder({ format = '300x250' }: AdPlaceholderProps
                 'params' : {}
             };
         `;
-        container.appendChild(optionsScript);
+        scriptWrapper.appendChild(optionsScript);
 
         const invokeScript = document.createElement('script');
         invokeScript.type = 'text/javascript';
         invokeScript.src = `https://www.highperformanceformat.com/${config.key}/invoke.js`;
-        container.appendChild(invokeScript);
+        scriptWrapper.appendChild(invokeScript);
+        
+        container.appendChild(scriptWrapper);
 
     }, [format, AD_ACTIVE]);
 
