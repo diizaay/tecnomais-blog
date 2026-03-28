@@ -61,6 +61,18 @@ const nextConfig = {
             destination: 'https://www.highperformanceformat.com/:path*',
         },
         {
+            source: '/ads-proxy/adsterra-static/:path*',
+            destination: 'https://www.adsterratools.com/:path*',
+        },
+        {
+            source: '/ads-proxy/adsterra-click/:path*',
+            destination: 'https://onclickads.net/:path*',
+        },
+        {
+            source: '/ads-proxy/adsterra-decoy/:path*',
+            destination: 'https://realizationnewestfangs.com/:path*',
+        },
+        {
             source: '/ads-proxy/monetag/:path*',
             destination: 'https://pl28985299.profitablecpmratenetwork.com/:path*',
         },
@@ -112,5 +124,5 @@ const nextConfig = {
     },
 };
 
-// Force redeploy and cache invalidation: 2026-03-28T14:21:00Z
+// Force redeploy and cache invalidation: 2026-03-28T14:23:00Z
 export default nextConfig;
