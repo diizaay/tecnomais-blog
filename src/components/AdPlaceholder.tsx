@@ -49,7 +49,7 @@ export default function AdPlaceholder({ format = '300x250' }: AdPlaceholderProps
             frameDoc.write(`
                 <html>
                     <body style="margin:0;padding:0;overflow:hidden;">
-                        <script async data-cfasync="false" src="https://pl28985299.profitablecpmratenetwork.com/5b95a5dd0ddbde1c299fda173e0428f2/invoke.js"></script>
+                        <script async data-cfasync="false" src="/ads-proxy/monetag/5b95a5dd0ddbde1c299fda173e0428f2/invoke.js"></script>
                         <div id="container-5b95a5dd0ddbde1c299fda173e0428f2"></div>
                     </body>
                 </html>
@@ -80,7 +80,7 @@ export default function AdPlaceholder({ format = '300x250' }: AdPlaceholderProps
                                 'width' : ${config.width},
                                 'params' : {}
                             };
-                            document.write('<scr' + 'ipt type="text/javascript" src="https://www.highperformanceformat.com/${config.key}/invoke.js"></scr' + 'ipt>');
+                            document.write('<scr' + 'ipt type="text/javascript" src="/ads-proxy/adsterra/${config.key}/invoke.js"></scr' + 'ipt>');
                         </script>
                     </div>
                 </body>

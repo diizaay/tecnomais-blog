@@ -55,13 +55,22 @@ const nextConfig = {
     eslint: {
         ignoreDuringBuilds: true,
     },
+    rewrites: async () => [
+        {
+            source: '/ads-proxy/adsterra/:path*',
+            destination: 'https://www.highperformanceformat.com/:path*',
+        },
+        {
+            source: '/ads-proxy/monetag/:path*',
+            destination: 'https://pl28985299.profitablecpmratenetwork.com/:path*',
+        },
+    ],
     headers: async () => [
         {
             source: '/(.*)',
             headers: securityHeaders,
         },
         {
-            // Long cache for static assets
             source: '/(.*)\\.(ico|png|jpg|jpeg|svg|webp|avif|woff|woff2)',
             headers: [
                 {
@@ -103,5 +112,5 @@ const nextConfig = {
     },
 };
 
-// Force redeploy and cache invalidation: 2026-03-28T13:17:00Z
+// Force redeploy and cache invalidation: 2026-03-28T13:50:00Z
 export default nextConfig;
