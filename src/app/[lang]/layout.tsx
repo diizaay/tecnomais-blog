@@ -38,7 +38,6 @@ export default async function LocaleLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://res.cloudinary.com" />
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
-        <script src="https://pl28983912.profitablecpmratenetwork.com/89/39/90/893990f37227b69bb6dac5c01b525552.js" async={true}></script>
       </head>
       <body className={`${inter.variable} font-sans bg-[#fbfbfd] text-[#1d1d1f] antialiased min-h-screen flex flex-col`}>
         <Suspense fallback={null}>
