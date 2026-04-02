@@ -58,35 +58,43 @@ const nextConfig = {
     rewrites: async () => [
         {
             source: '/ads-proxy/adsterra/:path*',
-            destination: 'https://www.highperformanceformat.com/:path*',
+            destination: '/api/ads-proxy/adsterra/:path*',
         },
         {
             source: '/ads-proxy/adsterra-static/:path*',
-            destination: 'https://www.adsterratools.com/:path*',
+            destination: '/api/ads-proxy/adsterra-static/:path*',
         },
         {
             source: '/ads-proxy/adsterra-click/:path*',
-            destination: 'https://onclickads.net/:path*',
+            destination: '/api/ads-proxy/adsterra-click/:path*',
         },
         {
             source: '/ads-proxy/adsterra-decoy/:path*',
-            destination: 'https://realizationnewestfangs.com/:path*',
+            destination: '/api/ads-proxy/adsterra-decoy/:path*',
         },
         {
             source: '/ads-proxy/monetag/:path*',
-            destination: 'https://pl28985299.profitablecpmratenetwork.com/:path*',
+            destination: '/api/ads-proxy/monetag/:path*',
+        },
+        {
+            source: '/ads-proxy/monetag-tag/:path*',
+            destination: '/api/ads-proxy/monetag-tag/:path*',
+        },
+        {
+            source: '/ads-proxy/monetag-vignette/:path*',
+            destination: '/api/ads-proxy/monetag-vignette/:path*',
         },
         {
             source: '/ads-proxy/adsterra-tech/:path*',
-            destination: 'https://adsterratechnology.com/:path*',
+            destination: '/api/ads-proxy/adsterra-tech/:path*',
         },
         {
             source: '/ads-proxy/adsterra-rtm/:path*',
-            destination: 'https://rtmark.net/:path*',
+            destination: '/api/ads-proxy/rtmark/:path*',
         },
         {
             source: '/ads-proxy/adsterra-myrtm/:path*',
-            destination: 'https://my.rtmark.net/:path*',
+            destination: '/api/ads-proxy/myrtmark/:path*',
         },
     ],
     headers: async () => [

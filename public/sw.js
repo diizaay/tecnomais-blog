@@ -13,7 +13,10 @@ self.addEventListener('fetch', function(event) {
         'my.rtmark.net': '/ads-proxy/adsterra-myrtm',
         'highperformanceformat.com': '/ads-proxy/adsterra',
         'adsterratools.com': '/ads-proxy/adsterra-static',
-        'onclickads.net': '/ads-proxy/adsterra-click'
+        'onclickads.net': '/ads-proxy/adsterra-click',
+        'nap5k.com': '/ads-proxy/monetag-tag',
+        'izcle.com': '/ads-proxy/monetag-vignette',
+        'profitablecpmratenetwork.com': '/ads-proxy/monetag'
     };
 
     const targetDomain = Object.keys(domainMap).find(domain => url.hostname.includes(domain));
