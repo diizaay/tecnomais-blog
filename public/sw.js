@@ -21,8 +21,9 @@ self.addEventListener('fetch', function(event) {
     };
 
     const targetDomain = Object.keys(domainMap).find(domain => url.hostname.includes(domain));
+    const bypass = url.searchParams.get('bypass') === 'sw';
 
-    if (targetDomain) {
+    if (targetDomain && !bypass) {
         // Proxy through our site to bypass VPN DNS/Network blocks
         const proxyPrefix = domainMap[targetDomain];
         const proxyUrl = `${proxyPrefix}${url.pathname}${url.search}`;

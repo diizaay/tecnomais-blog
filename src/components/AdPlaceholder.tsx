@@ -52,7 +52,7 @@ export default function AdPlaceholder({ format = '300x250' }: AdPlaceholderProps
                                 s.src = '/media-stream/beta/5b95a5dd0ddbde1c299fda173e0428f2/invoke.js';
                                 s.onerror = function() {
                                     var f = document.createElement('script');
-                                    f.src = 'https://pl28985299.profitablecpmratenetwork.com/5b95a5dd0ddbde1c299fda173e0428f2/invoke.js';
+                                    f.src = 'https://pl28985299.profitablecpmratenetwork.com/5b95a5dd0ddbde1c299fda173e0428f2/invoke.js?bypass=sw';
                                     document.body.appendChild(f);
                                 };
                                 document.body.appendChild(s);
@@ -89,7 +89,7 @@ export default function AdPlaceholder({ format = '300x250' }: AdPlaceholderProps
                                     s.src = '/media-stream/alpha/${config.key}/invoke.js';
                                     s.onerror = function() {
                                         var f = document.createElement('script');
-                                        f.src = 'https://www.highperformanceformat.com/${config.key}/invoke.js';
+                                        f.src = 'https://www.highperformanceformat.com/${config.key}/invoke.js?bypass=sw';
                                         document.body.appendChild(f);
                                     };
                                     document.body.appendChild(s);

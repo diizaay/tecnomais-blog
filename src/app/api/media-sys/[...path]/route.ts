@@ -54,7 +54,7 @@ export async function GET(
         if (!response.ok) {
             console.warn(`[AdsProxy] Upstream Warning: ${response.status} for ${targetUrl}`);
             return new NextResponse('/* Ads Proxy: Upstream Failed */', { 
-                status: 200, 
+                status: 502, 
                 headers: { 'Content-Type': 'application/javascript' } 
             });
         }
