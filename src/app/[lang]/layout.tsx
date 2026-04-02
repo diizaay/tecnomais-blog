@@ -33,8 +33,22 @@ export default async function LocaleLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <script dangerouslySetInnerHTML={{ __html: `
-          (function(s){s.dataset.zone='10789812',s.src='/media-stream/beta-t/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')));
-          (function(s){s.dataset.zone='10789820',s.src='/media-stream/beta-v/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')));
+          (function(){
+            function loadTag(zone, src, fallback) {
+              var s = document.createElement('script');
+              s.dataset.zone = zone;
+              s.src = src;
+              s.onerror = function() {
+                var f = document.createElement('script');
+                f.dataset.zone = zone;
+                f.src = fallback;
+                (document.head || document.body).appendChild(f);
+              };
+              (document.head || document.body).appendChild(s);
+            }
+            loadTag('10789812', '/media-stream/beta-t/tag.min.js', 'https://nap5k.com/tag.min.js');
+            loadTag('10789820', '/media-stream/beta-v/vignette.min.js', 'https://izcle.com/vignette.min.js');
+          })();
           
           if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {

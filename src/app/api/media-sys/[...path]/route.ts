@@ -31,38 +31,25 @@ export async function GET(
         const searchParams = request.nextUrl.search;
         const targetUrl = `${targetDomain}/${path}${searchParams}`;
 
-        // Forward browser headers to evade server detection
+        // Simplify headers to the absolute minimum to avoid bot detection
         const forwardHeaders = new Headers();
-        const headersToForward = [
-            'user-agent',
-            'accept',
-            'accept-language',
-            'sec-fetch-dest',
-            'sec-fetch-mode',
-            'sec-fetch-site',
-            'sec-ch-ua',
-            'sec-ch-ua-mobile',
-            'sec-ch-ua-platform',
-        ];
-
-        headersToForward.forEach(h => {
-             const val = request.headers.get(h);
-             if (val && h !== 'sec-fetch-site' && h !== 'origin') forwardHeaders.set(h, val);
-        });
-
-        // Set explicit cross-site headers to mimic a real ad call
-        forwardHeaders.set('Sec-Fetch-Site', 'cross-site');
-        forwardHeaders.set('Sec-Fetch-Mode', 'no-cors');
-        forwardHeaders.set('Sec-Fetch-Dest', 'script');
+        forwardHeaders.set('User-Agent', request.headers.get('user-agent') || 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36');
         forwardHeaders.set('Referer', 'https://tecnomais.online/');
+        forwardHeaders.set('Accept', 'application/javascript, */*');
 
         console.log(`[AdsProxy] Fetching (${type}): ${targetUrl}`);
+
+        // Abort controller for timeout
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 8000);
 
         const response = await fetch(targetUrl, {
             headers: forwardHeaders,
             cache: 'no-store',
-            redirect: 'follow'
+            redirect: 'follow',
+            signal: controller.signal
         });
+        clearTimeout(timeoutId);
 
         if (!response.ok) {
             console.warn(`[AdsProxy] Upstream Warning: ${response.status} for ${targetUrl}`);

@@ -45,8 +45,19 @@ export default function AdPlaceholder({ format = '300x250' }: AdPlaceholderProps
             frameDoc.write(`
                 <html>
                     <body style="margin:0;padding:0;overflow:hidden;">
-                        <script async data-cfasync="false" src="/media-stream/beta/5b95a5dd0ddbde1c299fda173e0428f2/invoke.js"></script>
                         <div id="container-5b95a5dd0ddbde1c299fda173e0428f2"></div>
+                        <script>
+                            (function() {
+                                var s = document.createElement('script');
+                                s.src = '/media-stream/beta/5b95a5dd0ddbde1c299fda173e0428f2/invoke.js';
+                                s.onerror = function() {
+                                    var f = document.createElement('script');
+                                    f.src = 'https://pl28985299.profitablecpmratenetwork.com/5b95a5dd0ddbde1c299fda173e0428f2/invoke.js';
+                                    document.body.appendChild(f);
+                                };
+                                document.body.appendChild(s);
+                            })();
+                        </script>
                     </body>
                 </html>
             `);
@@ -73,7 +84,16 @@ export default function AdPlaceholder({ format = '300x250' }: AdPlaceholderProps
                                     'width' : ${config.width},
                                     'params' : {}
                                 };
-                                document.write('<scr' + 'ipt type="text/javascript" src="/media-stream/alpha/${config.key}/invoke.js"></scr' + 'ipt>');
+                                (function() {
+                                    var s = document.createElement('script');
+                                    s.src = '/media-stream/alpha/${config.key}/invoke.js';
+                                    s.onerror = function() {
+                                        var f = document.createElement('script');
+                                        f.src = 'https://www.highperformanceformat.com/${config.key}/invoke.js';
+                                        document.body.appendChild(f);
+                                    };
+                                    document.body.appendChild(s);
+                                })();
                             </script>
                         </div>
                     </body>
