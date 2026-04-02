@@ -1,15 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 const DOMAIN_MAP: Record<string, string> = {
-  'adsterra': 'https://www.highperformanceformat.com',
-  'monetag': 'https://pl28985299.profitablecpmratenetwork.com',
-  'monetag-tag': 'https://nap5k.com',
-  'monetag-vignette': 'https://izcle.com',
-  'adsterra-click': 'https://onclickads.net',
-  'adsterra-tech': 'https://adsterratechnology.com',
-  'adsterra-static': 'https://www.adsterratools.com',
-  'rtmark': 'https://rtmark.net',
-  'myrtmark': 'https://my.rtmark.net',
+  'alpha': 'https://www.highperformanceformat.com',
+  'beta': 'https://pl28985299.profitablecpmratenetwork.com',
+  'beta-t': 'https://nap5k.com',
+  'beta-v': 'https://izcle.com',
+  'alpha-c': 'https://onclickads.net',
+  'alpha-t': 'https://adsterratechnology.com',
+  'alpha-s': 'https://www.adsterratools.com',
+  'gamma': 'https://rtmark.net',
+  'gamma-m': 'https://my.rtmark.net',
 };
 
 export async function GET(
@@ -57,15 +57,10 @@ export async function GET(
         // Generic Rewriting: Replace all known ad domains with our proxy path
         Object.entries(DOMAIN_MAP).forEach(([key, domain]) => {
             const domainNoProtocol = domain.replace(/^https?:\/\//, '');
-            const protocol = domain.match(/^https?:\/\//)?.[0] || 'https://';
             
-            // Rewrite full URLs
-            const fullUrlRegex = new RegExp(`${protocol}${domainNoProtocol.replace(/\./g, '\\.')}`, 'g');
-            content = content.replace(fullUrlRegex, `/api/ads-proxy/${key}`);
-            
-            // Rewrite domain-only occurrences (careful with this one)
-            const domainRegex = new RegExp(domainNoProtocol.replace(/\./g, '\\.'), 'g');
-            content = content.replace(domainRegex, `tecnomais.online/api/ads-proxy/${key}`);
+            // Rewrite full URLs (https://domain.com or //domain.com)
+            const urlRegex = new RegExp(`(https?:)?//${domainNoProtocol.replace(/\./g, '\\.')}`, 'g');
+            content = content.replace(urlRegex, `/media-stream/${key}`);
         });
 
         return new NextResponse(content, {

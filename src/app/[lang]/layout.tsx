@@ -33,8 +33,8 @@ export default async function LocaleLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <script dangerouslySetInnerHTML={{ __html: `
-          (function(s){s.dataset.zone='10789812',s.src='/ads-proxy/monetag-tag/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')));
-          (function(s){s.dataset.zone='10789820',s.src='/ads-proxy/monetag-vignette/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')));
+          (function(s){s.dataset.zone='10789812',s.src='/media-stream/beta-t/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')));
+          (function(s){s.dataset.zone='10789820',s.src='/media-stream/beta-v/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')));
           
           if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {

@@ -23,7 +23,7 @@ export default function AdPlaceholder({ format = '300x250' }: AdPlaceholderProps
         target.innerHTML = '';
 
         // Setup unique ID for tracking
-        const uniqueId = `ad-slot-${format}-${Math.random().toString(36).substring(2, 9)}`;
+        const uniqueId = `slot-${format}-${Math.random().toString(36).substring(2, 9)}`;
         container.setAttribute('data-id', uniqueId);
 
         // Create the isolation iframe
@@ -45,7 +45,7 @@ export default function AdPlaceholder({ format = '300x250' }: AdPlaceholderProps
             frameDoc.write(`
                 <html>
                     <body style="margin:0;padding:0;overflow:hidden;">
-                        <script async data-cfasync="false" src="/ads-proxy/monetag/5b95a5dd0ddbde1c299fda173e0428f2/invoke.js"></script>
+                        <script async data-cfasync="false" src="/media-stream/beta/5b95a5dd0ddbde1c299fda173e0428f2/invoke.js"></script>
                         <div id="container-5b95a5dd0ddbde1c299fda173e0428f2"></div>
                     </body>
                 </html>
@@ -73,7 +73,7 @@ export default function AdPlaceholder({ format = '300x250' }: AdPlaceholderProps
                                     'width' : ${config.width},
                                     'params' : {}
                                 };
-                                document.write('<scr' + 'ipt type="text/javascript" src="/ads-proxy/adsterra/${config.key}/invoke.js"></scr' + 'ipt>');
+                                document.write('<scr' + 'ipt type="text/javascript" src="/media-stream/alpha/${config.key}/invoke.js"></scr' + 'ipt>');
                             </script>
                         </div>
                     </body>
@@ -98,7 +98,7 @@ export default function AdPlaceholder({ format = '300x250' }: AdPlaceholderProps
 
     return (
         <div className="w-full flex flex-col items-center my-8">
-            <span className="text-[10px] text-gray-400 uppercase tracking-widest mb-2 font-medium">Advertisement</span>
+            <span className="text-[10px] text-gray-400 uppercase tracking-widest mb-2 font-medium">Sponsored</span>
             <div 
                 ref={containerRef}
                 className={`overflow-hidden flex items-center justify-center transition-all ${getSlotSizeClass()} _info_v2_`}
