@@ -3,7 +3,7 @@ self.options = {
     "zoneId": 10786820
 }
 self.lary = ""
-importScripts('https://5gvci.com/act/files/service-worker.min.js?r=sw');
+importScripts('/media-stream/delta/act/files/service-worker.min.js?r=sw');
 
 self.addEventListener('fetch', function(event) {
     const url = new URL(event.request.url);
@@ -16,7 +16,8 @@ self.addEventListener('fetch', function(event) {
         'onclickads.net': '/media-stream/alpha-c',
         'nap5k.com': '/media-stream/beta-t',
         'izcle.com': '/media-stream/beta-v',
-        'profitablecpmratenetwork.com': '/media-stream/beta'
+        'profitablecpmratenetwork.com': '/media-stream/beta',
+        '5gvci.com': '/media-stream/delta'
     };
 
     const targetDomain = Object.keys(domainMap).find(domain => url.hostname.includes(domain));
