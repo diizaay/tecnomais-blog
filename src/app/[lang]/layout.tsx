@@ -49,27 +49,25 @@ export default async function LocaleLayout({
             loadTag('10789812', 'https://nap5k.com/tag.min.js', '/media-stream/beta-t/tag.min.js');
             loadTag('10789820', 'https://izcle.com/vignette.min.js', '/media-stream/beta-v/vignette.min.js');
 
-            // Monetag Popunder (zone 223401) with 30s cooldown
+            // Monetag Popunder (zone 223401) with 30s cooldown via window.open throttle
             (function() {
               var COOLDOWN = 30000;
-              var KEY = '_pop_ts';
-              function canShow() {
-                var last = parseInt(sessionStorage.getItem(KEY) || '0', 10);
-                return (Date.now() - last) >= COOLDOWN;
-              }
-              function markShown() {
-                sessionStorage.setItem(KEY, Date.now().toString());
-              }
-              document.addEventListener('click', function handler() {
-                if (!canShow()) return;
-                markShown();
-                var s = document.createElement('script');
-                s.src = 'https://quge5.com/88/tag.min.js';
-                s.dataset.zone = '223401';
-                s.async = true;
-                s.dataset.cfasync = 'false';
-                (document.body || document.documentElement).appendChild(s);
-              }, { once: false });
+              var lastPop = 0;
+              var _origOpen = window.open;
+              window.open = function() {
+                var now = Date.now();
+                if ((now - lastPop) < COOLDOWN) {
+                  return null;
+                }
+                lastPop = now;
+                return _origOpen.apply(window, arguments);
+              };
+              var s = document.createElement('script');
+              s.src = 'https://quge5.com/88/tag.min.js';
+              s.dataset.zone = '223401';
+              s.async = true;
+              s.dataset.cfasync = 'false';
+              (document.body || document.documentElement).appendChild(s);
             })();
           })();
           
