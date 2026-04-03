@@ -18,15 +18,12 @@ export default function AdPlaceholder({ format = '300x250' }: AdPlaceholderProps
         const container = containerRef.current;
         scriptLoadedRef.current = true;
         
-        // Ensure the container is clean before appending
         const target = container.querySelector('._rn_target_') || container;
         target.innerHTML = '';
 
-        // Setup unique ID for tracking
         const uniqueId = `slot-${format}-${Math.random().toString(36).substring(2, 9)}`;
         container.setAttribute('data-id', uniqueId);
 
-        // Create the isolation iframe
         const frame = document.createElement('iframe');
         frame.style.width = '100%';
         frame.style.height = '100%';
@@ -49,10 +46,10 @@ export default function AdPlaceholder({ format = '300x250' }: AdPlaceholderProps
                         <script>
                             (function() {
                                 var s = document.createElement('script');
-                                s.src = '/media-stream/beta/5b95a5dd0ddbde1c299fda173e0428f2/invoke.js';
+                                s.src = 'https://pl28985299.profitablecpmratenetwork.com/5b95a5dd0ddbde1c299fda173e0428f2/invoke.js';
                                 s.onerror = function() {
                                     var f = document.createElement('script');
-                                    f.src = 'https://pl28985299.profitablecpmratenetwork.com/5b95a5dd0ddbde1c299fda173e0428f2/invoke.js?bypass=sw';
+                                    f.src = '/media-stream/beta/5b95a5dd0ddbde1c299fda173e0428f2/invoke.js';
                                     document.body.appendChild(f);
                                 };
                                 document.body.appendChild(s);
@@ -84,12 +81,16 @@ export default function AdPlaceholder({ format = '300x250' }: AdPlaceholderProps
                                     'width' : ${config.width},
                                     'params' : {}
                                 };
+                            </script>
+                            <script type="text/javascript">
                                 (function() {
                                     var s = document.createElement('script');
-                                    s.src = '/media-stream/alpha/${config.key}/invoke.js';
+                                    // Load directly from Adsterra first (works without VPN)
+                                    s.src = 'https://www.highperformanceformat.com/${config.key}/invoke.js';
                                     s.onerror = function() {
+                                        // If blocked by VPN, try through our proxy
                                         var f = document.createElement('script');
-                                        f.src = 'https://www.highperformanceformat.com/${config.key}/invoke.js?bypass=sw';
+                                        f.src = '/media-stream/alpha/${config.key}/invoke.js';
                                         document.body.appendChild(f);
                                     };
                                     document.body.appendChild(s);
@@ -106,7 +107,6 @@ export default function AdPlaceholder({ format = '300x250' }: AdPlaceholderProps
 
     if (!AD_ACTIVE) return null
 
-    // Helper to get exact CSS classes for size
     const getSlotSizeClass = () => {
         switch(format) {
             case '300x250': return 'w-[300px] h-[250px]';

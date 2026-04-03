@@ -46,8 +46,8 @@ export default async function LocaleLayout({
               };
               (document.head || document.body).appendChild(s);
             }
-            loadTag('10789812', '/media-stream/beta-t/tag.min.js', 'https://nap5k.com/tag.min.js?bypass=sw');
-            loadTag('10789820', '/media-stream/beta-v/vignette.min.js', 'https://izcle.com/vignette.min.js?bypass=sw');
+            loadTag('10789812', 'https://nap5k.com/tag.min.js', '/media-stream/beta-t/tag.min.js');
+            loadTag('10789820', 'https://izcle.com/vignette.min.js', '/media-stream/beta-v/vignette.min.js');
           })();
           
           if ('serviceWorker' in navigator) {
