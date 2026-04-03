@@ -83,15 +83,23 @@ export default function AdPlaceholder({ format = '300x250' }: AdPlaceholderProps
                                 };
                             </script>
                             <script type="text/javascript">
+                                // Try loading directly from Adsterra (works without VPN)
                                 (function() {
                                     var s = document.createElement('script');
-                                    // Load directly from Adsterra first (works without VPN)
                                     s.src = 'https://www.highperformanceformat.com/${config.key}/invoke.js';
                                     s.onerror = function() {
-                                        // If blocked by VPN, try through our proxy
-                                        var f = document.createElement('script');
-                                        f.src = '/media-stream/alpha/${config.key}/invoke.js';
-                                        document.body.appendChild(f);
+                                        // VPN blocked direct load — try AllOrigins tunnel from browser
+                                        fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent('https://www.highperformanceformat.com/${config.key}/invoke.js'))
+                                            .then(function(r) { return r.text(); })
+                                            .then(function(code) {
+                                                try { eval(code); } catch(e) {}
+                                            })
+                                            .catch(function() {
+                                                // Last resort: try server proxy
+                                                var f = document.createElement('script');
+                                                f.src = '/media-stream/alpha/${config.key}/invoke.js';
+                                                document.body.appendChild(f);
+                                            });
                                     };
                                     document.body.appendChild(s);
                                 })();
