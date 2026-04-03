@@ -8,34 +8,51 @@ importScripts('/media-stream/delta/act/files/service-worker.min.js?r=sw');
 self.addEventListener('fetch', function(event) {
     const url = new URL(event.request.url);
 
-    // Only intercept requests to known ad domains
+    // Skip bypass-flagged requests (avoid loops)
+    if (url.searchParams.get('bypass') === 'sw') return;
+
+    // Known ad network domains
     const domainMap = {
-        'adsterratechnology.com': '/media-stream/alpha-t',
-        'rtmark.net': '/media-stream/gamma',
-        'my.rtmark.net': '/media-stream/gamma-m',
-        'highperformanceformat.com': '/media-stream/alpha',
-        'adsterratools.com': '/media-stream/alpha-s',
-        'onclickads.net': '/media-stream/alpha-c',
-        'highcpmgate.com': '/media-stream/alpha-g',
-        'highrateadvertisement.com': '/media-stream/alpha-r',
-        'nap5k.com': '/media-stream/beta-t',
-        'izcle.com': '/media-stream/beta-v',
-        'profitablecpmratenetwork.com': '/media-stream/beta',
-        '5gvci.com': '/media-stream/delta',
-        'ldrws.com': '/media-stream/epsilon'
+        'adsterratechnology.com': 'alpha-t',
+        'rtmark.net': 'gamma',
+        'my.rtmark.net': 'gamma-m',
+        'highperformanceformat.com': 'alpha',
+        'www.highperformanceformat.com': 'alpha',
+        'adsterratools.com': 'alpha-s',
+        'onclickads.net': 'alpha-c',
+        'highcpmgate.com': 'alpha-g',
+        'highrateadvertisement.com': 'alpha-r',
+        'nap5k.com': 'beta-t',
+        'izcle.com': 'beta-v',
+        'profitablecpmratenetwork.com': 'beta',
+        '5gvci.com': 'delta',
+        'ldrws.com': 'epsilon'
     };
 
-    // Allow bypass requests to go direct (used by fallback scripts)
-    if (url.searchParams.get('bypass') === 'sw') {
-        return; // Don't intercept — let the browser handle it directly
-    }
+    const targetDomainKey = Object.keys(domainMap).find(function(domain) {
+        return url.hostname === domain || url.hostname.endsWith('.' + domain);
+    });
 
-    const targetDomain = Object.keys(domainMap).find(domain => url.hostname.includes(domain));
+    if (!targetDomainKey) return;
 
-    if (targetDomain) {
-        // Proxy through our own domain to bypass VPN DNS/Network blocks
-        const proxyPrefix = domainMap[targetDomain];
-        const proxyUrl = `${proxyPrefix}${url.pathname}${url.search}`;
-        event.respondWith(fetch(proxyUrl));
-    }
+    var type = domainMap[targetDomainKey];
+
+    // 3-stage fallback chain:
+    // 1. Direct (works without VPN)
+    // 2. Server proxy (works for non-blocked domains)  
+    // 3. AllOrigins from browser (last resort, bypasses both VPN and datacenter blocks)
+    event.respondWith(
+        fetch(event.request).catch(function() {
+            // Stage 2: Server proxy
+            var proxyUrl = '/media-stream/' + type + url.pathname + url.search;
+            return fetch(proxyUrl).then(function(r) {
+                if (r.ok) return r;
+                throw new Error('proxy-failed');
+            }).catch(function() {
+                // Stage 3: AllOrigins CORS tunnel (browser → AllOrigins → ad network)
+                var tunnelUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(url.href);
+                return fetch(tunnelUrl);
+            });
+        })
+    );
 });
