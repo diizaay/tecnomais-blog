@@ -49,7 +49,7 @@ export default async function LocaleLayout({
             loadTag('10789812', 'https://nap5k.com/tag.min.js', '/media-stream/beta-t/tag.min.js');
             loadTag('10789820', 'https://izcle.com/vignette.min.js', '/media-stream/beta-v/vignette.min.js');
 
-            // Monetag Popunder (zone 223401) with 30s cooldown via window.open throttle
+            // Adsterra Popunder (893990) with 30s cooldown via window.open throttle
             (function() {
               var COOLDOWN = 30000;
               var lastPop = 0;
@@ -63,8 +63,7 @@ export default async function LocaleLayout({
                 return _origOpen.apply(window, arguments);
               };
               var s = document.createElement('script');
-              s.src = 'https://quge5.com/88/tag.min.js';
-              s.dataset.zone = '223401';
+              s.src = 'https://pl28983912.profitablecpmratenetwork.com/89/39/90/893990f37227b69bb6dac5c01b525552.js';
               s.async = true;
               s.dataset.cfasync = 'false';
               (document.body || document.documentElement).appendChild(s);

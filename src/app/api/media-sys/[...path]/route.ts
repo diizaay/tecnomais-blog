@@ -8,6 +8,7 @@ const DOMAIN_MAP: Record<string, string> = {
   'alpha-g': 'https://www.highcpmgate.com',
   'alpha-r': 'https://www.highrateadvertisement.com',
   'beta': 'https://pl28985299.profitablecpmratenetwork.com',
+  'beta-p': 'https://pl28983912.profitablecpmratenetwork.com',
   'beta-t': 'https://nap5k.com',
   'beta-v': 'https://izcle.com',
   'gamma': 'https://rtmark.net',
