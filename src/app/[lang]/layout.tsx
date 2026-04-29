@@ -1,19 +1,11 @@
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Suspense } from 'react';
-import { Inter } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProgressBar from "@/components/ProgressBar";
 import { getDictionary, Locale } from "@/lib/get-dictionary";
-import "../globals.css";
 import { GoogleAnalytics } from '@next/third-parties/google';
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
 
 export async function generateStaticParams() {
   return [{ lang: 'en' }, { lang: 'pt' }]
@@ -29,9 +21,7 @@ export default async function LocaleLayout({
   const dict = await getDictionary(lang);
 
   return (
-    <html lang={lang}>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <>
         <script dangerouslySetInnerHTML={{ __html: `
           (function(){
             function loadTag(zone, src, fallback) {
@@ -49,43 +39,11 @@ export default async function LocaleLayout({
             loadTag('10789812', 'https://nap5k.com/tag.min.js', '/media-stream/beta-t/tag.min.js');
             loadTag('10789820', 'https://izcle.com/vignette.min.js', '/media-stream/beta-v/vignette.min.js');
 
-            // Adsterra Popunder (893990) with 30s cooldown via window.open throttle
-            (function() {
-              var COOLDOWN = 30000;
-              var lastPop = 0;
-              var _origOpen = window.open;
-              window.open = function() {
-                var now = Date.now();
-                if ((now - lastPop) < COOLDOWN) {
-                  return null;
-                }
-                lastPop = now;
-                return _origOpen.apply(window, arguments);
-              };
-              var s = document.createElement('script');
-              s.src = 'https://pl28983912.profitablecpmratenetwork.com/89/39/90/893990f37227b69bb6dac5c01b525552.js';
-              s.async = true;
-              s.dataset.cfasync = 'false';
-              (document.body || document.documentElement).appendChild(s);
-            })();
+
           })();
-          
-          if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-              navigator.serviceWorker.register('/sw.js').then(function(registration) {
-                console.log('SW registered: ', registration);
-              }, function(err) {
-                console.log('SW registration failed: ', err);
-              });
-            });
-          }
         `}} />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://res.cloudinary.com" />
-        <link rel="dns-prefetch" href="https://images.unsplash.com" />
-      </head>
-      <body className={`${inter.variable} font-sans bg-[#fbfbfd] text-[#1d1d1f] antialiased min-h-screen flex flex-col`}>
         <Suspense fallback={null}>
+
           <ProgressBar />
         </Suspense>
         <Navbar lang={lang} dict={dict} />
@@ -96,7 +54,6 @@ export default async function LocaleLayout({
         <Analytics />
         <SpeedInsights />
         <GoogleAnalytics gaId="G-XL1PMB2THP" />
-      </body>
-    </html>
+    </>
   );
 }
